@@ -21,13 +21,16 @@
     </div>
     <div class="navigation-buttons">
       <button @click="previousPlayer" :disabled="currentPlayerIndex === 0">
-        Previous Player
+        &larr; Previous
       </button>
+      <div class="player-counter">
+        {{ currentPlayerIndex + 1 }} / {{ playersWithRoles.length }}
+      </div>
       <button
         @click="nextPlayer"
         :disabled="currentPlayerIndex === playersWithRoles.length - 1"
       >
-        Next Player
+        Next &rarr;
       </button>
     </div>
     <button @click="finishReveal" class="finish-button">Finish Reveal</button>
@@ -192,13 +195,43 @@ export default {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    background-color: lighten($primary-color, 30%);
+    cursor: not-allowed;
+  }
+}
+
+.finish-button {
+  margin-top: 2rem;
+  background-color: $secondary-color;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
 }
 
 .navigation-buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 500px;
+}
+
+.player-counter {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 @media (max-width: $breakpoint-tablet) {

@@ -1,6 +1,6 @@
 <template>
   <div class="role-list">
-    <h3>Available Roles</h3>
+    <h3 class="list-title">Available Roles</h3>
     <div class="role-cards">
       <div
         v-for="role in allRoles"
@@ -9,8 +9,7 @@
         @click="selectRole(role)"
       >
         <img :src="role.image" :alt="role.name" class="role-image" />
-        <h4>{{ role.name }}</h4>
-        <p>{{ role.description }}</p>
+        <h4 class="role-name">{{ role.name }}</h4>
       </div>
     </div>
   </div>
@@ -44,19 +43,25 @@ export default {
   margin-bottom: 1rem;
 }
 
+.list-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 .role-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 1rem;
 }
 
 .role-card {
   background-color: white;
-  border: 1px solid $primary-color;
   border-radius: $border-radius;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
 
   &:hover {
     transform: translateY(-5px);
@@ -66,18 +71,22 @@ export default {
 
 .role-image {
   width: 100%;
-  height: 150px;
+  height: 100px;
   object-fit: cover;
   border-radius: $border-radius;
   margin-bottom: 0.5rem;
 }
 
-h4 {
-  margin-bottom: 0.5rem;
+.role-name {
+  font-size: 0.9rem;
+  margin: 0;
 }
 
-p {
-  font-size: 0.9em;
-  color: $text-color;
+// Dark mode styles
+:global(.dark-mode) {
+  .role-card {
+    background-color: lighten($text-color, 10%);
+    color: white;
+  }
 }
 </style>

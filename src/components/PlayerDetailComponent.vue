@@ -1,9 +1,13 @@
 <template>
   <div v-if="player" class="player-detail">
-    <img :src="player.avatar" :alt="player.name" class="player-avatar" />
-    <h3>{{ player.name }}</h3>
-    <button @click="editPlayer">Edit</button>
-    <button @click="deletePlayer" class="delete-button">Delete</button>
+    <div class="player-info">
+      <div class="player-avatar">{{ player.name[0] }}</div>
+      <h3 class="player-name">{{ player.name }}</h3>
+    </div>
+    <div class="player-actions">
+      <button @click="editPlayer" class="btn btn-primary">Edit</button>
+      <button @click="deletePlayer" class="btn btn-danger">Delete</button>
+    </div>
   </div>
 </template>
 
@@ -40,20 +44,84 @@ export default {
   text-align: center;
 }
 
-.player-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+.player-info {
   margin-bottom: 1rem;
 }
 
-.delete-button {
-  background-color: #e74c3c;
-  margin-left: 0.5rem;
+.player-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: $primary-color;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0.5rem;
+}
 
-  &:hover {
-    background-color: darken(#e74c3c, 10%);
+.player-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.player-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &-primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  &-danger {
+    background-color: #e74c3c;
+    color: white;
+
+    &:hover {
+      background-color: darken(#e74c3c, 10%);
+    }
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .player-detail {
+    background-color: lighten($text-color, 10%);
+    color: white;
+  }
+
+  .player-avatar {
+    background-color: $secondary-color;
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .player-avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 2.5rem;
+  }
+
+  .player-name {
+    font-size: 1.5rem;
   }
 }
 </style>

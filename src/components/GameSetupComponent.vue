@@ -1,31 +1,37 @@
 <template>
   <div class="game-setup">
-    <h3>Game Setup</h3>
-    <div class="player-selection">
-      <h4>Select Players</h4>
-      <div v-for="player in players" :key="player.id" class="player-checkbox">
-        <input
-          type="checkbox"
-          :id="'player-' + player.id"
-          v-model="selectedPlayers"
-          :value="player.id"
-        />
-        <label :for="'player-' + player.id">{{ player.name }}</label>
+    <h3 class="setup-title">Game Setup</h3>
+    <div class="setup-section">
+      <h4 class="section-subtitle">Select Players</h4>
+      <div class="player-grid">
+        <div v-for="player in players" :key="player.id" class="player-item">
+          <input
+            type="checkbox"
+            :id="'player-' + player.id"
+            v-model="selectedPlayers"
+            :value="player.id"
+          />
+          <label :for="'player-' + player.id">{{ player.name }}</label>
+        </div>
       </div>
     </div>
-    <div class="role-selection">
-      <h4>Select Roles</h4>
-      <div v-for="role in allRoles" :key="role.id" class="role-counter">
-        <img :src="role.image" :alt="role.name" class="role-image" />
-        <label>{{ role.name }}</label>
-        <button
-          @click="decrementRole(role.id)"
-          :disabled="roleCount[role.id] === 0"
-        >
-          -
-        </button>
-        <span>{{ roleCount[role.id] || 0 }}</span>
-        <button @click="incrementRole(role.id)">+</button>
+    <div class="setup-section">
+      <h4 class="section-subtitle">Select Roles</h4>
+      <div class="role-grid">
+        <div v-for="role in allRoles" :key="role.id" class="role-item">
+          <img :src="role.image" :alt="role.name" class="role-image" />
+          <span class="role-name">{{ role.name }}</span>
+          <div class="role-counter">
+            <button
+              @click="decrementRole(role.id)"
+              :disabled="roleCount[role.id] === 0"
+            >
+              -
+            </button>
+            <span>{{ roleCount[role.id] || 0 }}</span>
+            <button @click="incrementRole(role.id)">+</button>
+          </div>
+        </div>
       </div>
     </div>
     <button @click="startGame" :disabled="!isGameReady" class="start-game-btn">
@@ -91,69 +97,97 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .game-setup {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.setup-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.setup-section {
+  background-color: lighten($background-color, 5%);
   border-radius: $border-radius;
   padding: 1rem;
-  margin-bottom: 1rem;
 }
 
-.player-selection,
-.role-selection {
-  margin-bottom: 1rem;
-}
-
-.player-checkbox,
-.role-counter {
+.section-subtitle {
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+}
+
+.player-grid,
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.player-item,
+.role-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.role-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: $border-radius;
+}
+
+.role-name {
+  flex: 1;
 }
 
 .role-counter {
   display: flex;
   align-items: center;
-
-  label {
-    flex: 1;
-  }
+  gap: 0.5rem;
 
   button {
     width: 30px;
     height: 30px;
-    margin: 0 0.5rem;
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
 .start-game-btn {
   width: 100%;
-  padding: 0.75rem;
-  font-size: 1.1em;
+  padding: 1rem;
+  font-size: 1.2rem;
   background-color: $secondary-color;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
 
   &:disabled {
-    background-color: #ccc;
+    background-color: lighten($secondary-color, 20%);
     cursor: not-allowed;
   }
 }
-.role-counter {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
 
-  .role-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: $border-radius;
-    margin-right: 1rem;
+// Dark mode styles
+:global(.dark-mode) {
+  .setup-section {
+    background-color: lighten($text-color, 15%);
   }
 
-  label {
-    flex: 1;
-  }
+  .start-game-btn {
+    background-color: $primary-color;
 
-  button {
-    width: 30px;
-    height: 30px;
-    margin: 0 0.5rem;
+    &:disabled {
+      background-color: darken($primary-color, 20%);
+    }
   }
 }
 </style>

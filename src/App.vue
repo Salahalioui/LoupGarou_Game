@@ -2,11 +2,22 @@
   <div id="app" :class="{ 'dark-mode': isDarkMode }">
     <header class="app-header">
       <h1 class="app-title">Werewolf Moderator</h1>
-      <nav class="app-nav">
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/roles" class="nav-link">Roles</router-link>
-        <router-link to="/players" class="nav-link">Players</router-link>
-        <router-link to="/game" class="nav-link">Game</router-link>
+      <button @click="toggleMenu" class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="app-nav" :class="{ 'nav-open': isMenuOpen }">
+        <router-link to="/" class="nav-link" @click="closeMenu"
+          >Home</router-link
+        >
+        <router-link to="/roles" class="nav-link" @click="closeMenu"
+          >Roles</router-link
+        >
+        <router-link to="/players" class="nav-link" @click="closeMenu"
+          >Players</router-link
+        >
+        <router-link to="/game" class="nav-link" @click="closeMenu"
+          >Game</router-link
+        >
       </nav>
       <button @click="toggleDarkMode" class="dark-mode-toggle">
         {{ isDarkMode ? "☀️" : "🌙" }}
@@ -27,12 +38,19 @@ export default {
   data() {
     return {
       isDarkMode: false,
+      isMenuOpen: false,
     };
   },
   methods: {
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
       localStorage.setItem("darkMode", this.isDarkMode);
+    },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
     },
   },
   mounted() {
@@ -72,25 +90,46 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .app-title {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 
 .app-nav {
+  position: fixed;
+  top: 60px;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-color: $primary-color;
+  transition: left 0.3s ease;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  flex-direction: column;
+  padding: 1rem;
+
+  &.nav-open {
+    left: 0;
+  }
 }
 
 .nav-link {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  margin: 0.25rem;
+  margin: 0.25rem 0;
   border-radius: $border-radius;
   transition: background-color 0.3s ease;
 
@@ -103,7 +142,7 @@ body {
 .app-main {
   flex-grow: 1;
   padding: 1rem;
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
 }
@@ -122,9 +161,6 @@ body {
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
 }
 
 // Dark mode styles
@@ -151,15 +187,28 @@ body {
 // Responsive styles
 @media (min-width: $breakpoint-tablet) {
   .app-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: none;
   }
 
   .app-nav {
-    margin-top: 1rem;
+    position: static;
+    height: auto;
+    flex-direction: row;
+    padding: 0;
+    background-color: transparent;
   }
 
   .nav-link {
-    font-size: 1.1rem;
+    margin: 0 0.5rem;
+  }
+
+  .app-main {
+    max-width: 800px;
+    padding: 2rem;
   }
 }
 

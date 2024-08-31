@@ -2,12 +2,10 @@
   <div class="player-library">
     <h2 class="section-title">Player Library</h2>
     <div class="player-container">
-      <div class="player-list-container">
-        <PlayerListComponent
-          @player-selected="selectPlayer"
-          @add-player="showAddForm = true"
-        />
-      </div>
+      <PlayerListComponent
+        @player-selected="selectPlayer"
+        @add-player="showAddForm = true"
+      />
       <div class="player-detail-container">
         <PlayerFormComponent
           v-if="showAddForm || editingPlayer"
@@ -77,12 +75,13 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-library {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
+  padding: 1rem;
 }
 
 .section-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -90,7 +89,7 @@ export default {
 .player-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 
   @media (min-width: $breakpoint-tablet) {
     flex-direction: row;
@@ -106,14 +105,33 @@ export default {
   background-color: white;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 // Dark mode styles
 :global(.dark-mode) {
-  .player-detail-container {
+  .player-library {
     background-color: lighten($text-color, 5%);
     color: white;
+  }
+
+  .player-detail-container {
+    background-color: lighten($text-color, 10%);
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .player-library {
+    max-width: 800px;
+  }
+
+  .player-container {
+    flex-direction: row;
+  }
+
+  .player-detail-container {
+    flex: 1;
   }
 }
 </style>

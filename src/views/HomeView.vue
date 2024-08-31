@@ -46,19 +46,19 @@ export default {
 
 .hero-section {
   margin-bottom: 2rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
   background-color: $primary-color;
   color: white;
   border-radius: $border-radius;
 }
 
 .hero-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   opacity: 0.8;
 }
 
@@ -67,10 +67,6 @@ export default {
   grid-template-columns: 1fr;
   gap: 1rem;
   margin-bottom: 2rem;
-
-  @media (min-width: $breakpoint-tablet) {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .feature-card {
@@ -98,6 +94,8 @@ export default {
 .btn-primary {
   font-size: 1.2rem;
   padding: 0.75rem 1.5rem;
+  width: 100%;
+  max-width: 300px;
 }
 
 // Dark mode styles
@@ -113,6 +111,25 @@ export default {
 
   .feature-icon {
     color: $secondary-color;
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .features-section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .btn-primary {
+    width: auto;
   }
 }
 </style>

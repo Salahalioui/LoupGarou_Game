@@ -21,7 +21,18 @@
           class="avatar-preview"
         />
       </div>
-      <button type="submit">{{ isEditing ? "Update" : "Add" }} Player</button>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          {{ isEditing ? "Update" : "Add" }} Player
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          @click="$emit('cancel')"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   </div>
 </template>
@@ -106,6 +117,7 @@ export default {
   label {
     display: block;
     margin-bottom: 0.5rem;
+    font-weight: bold;
   }
 
   input {
@@ -113,6 +125,7 @@ export default {
     padding: 0.5rem;
     border: 1px solid $text-color;
     border-radius: $border-radius;
+    font-size: 1rem;
   }
 }
 
@@ -123,17 +136,53 @@ export default {
   border-radius: $border-radius;
 }
 
-button {
-  width: 100%;
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  flex: 1;
   padding: 0.75rem;
-  background-color: $primary-color;
-  color: white;
+  font-size: 1rem;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 
-  &:hover {
-    background-color: darken($primary-color, 10%);
+  &-primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  &-secondary {
+    background-color: $text-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($text-color, 10%);
+    }
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .player-form {
+    background-color: lighten($text-color, 10%);
+    color: white;
+  }
+
+  .form-group {
+    input {
+      background-color: lighten($text-color, 5%);
+      color: white;
+      border-color: $secondary-color;
+    }
   }
 }
 </style>

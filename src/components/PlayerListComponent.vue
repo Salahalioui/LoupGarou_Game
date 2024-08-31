@@ -37,24 +37,19 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-list {
-  margin-bottom: 2rem;
-}
-
-.section-title {
-  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
 .player-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .player-card {
   background-color: white;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   text-align: center;
@@ -62,17 +57,17 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
 
 .player-avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: $primary-color;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
@@ -82,12 +77,16 @@ export default {
 }
 
 .player-name {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .add-player-btn {
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 // Dark mode styles
@@ -99,6 +98,24 @@ export default {
 
   .player-avatar {
     background-color: $secondary-color;
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .player-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+
+  .player-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .player-name {
+    font-size: 1rem;
   }
 }
 </style>

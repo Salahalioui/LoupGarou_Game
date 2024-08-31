@@ -1,9 +1,12 @@
 <template>
   <div v-if="role" class="role-detail">
-    <h3>{{ role.name }}</h3>
-    <p>{{ role.description }}</p>
-    <button @click="editRole">Edit</button>
-    <button @click="deleteRole" class="delete-button">Delete</button>
+    <img :src="role.image" :alt="role.name" class="role-image" />
+    <h3 class="role-name">{{ role.name }}</h3>
+    <p class="role-description">{{ role.description }}</p>
+    <div class="role-actions">
+      <button @click="editRole" class="edit-btn">Edit</button>
+      <button @click="deleteRole" class="delete-btn">Delete</button>
+    </div>
   </div>
 </template>
 
@@ -37,14 +40,65 @@ export default {
   border-radius: $border-radius;
   padding: 1rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
-.delete-button {
+.role-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: $border-radius;
+  margin-bottom: 1rem;
+}
+
+.role-name {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.role-description {
+  margin-bottom: 1rem;
+}
+
+.role-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: $primary-color;
+  color: white;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.delete-btn {
   background-color: #e74c3c;
-  margin-left: 0.5rem;
+  color: white;
 
   &:hover {
     background-color: darken(#e74c3c, 10%);
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .role-detail {
+    background-color: lighten($text-color, 10%);
+    color: white;
   }
 }
 </style>
