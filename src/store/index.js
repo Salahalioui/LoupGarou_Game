@@ -98,8 +98,13 @@ export default createStore({
       commit("DELETE_ROLE", roleId);
     },
     async deletePlayer({ commit }, playerId) {
-      await dbService.delete("players", playerId);
-      commit("DELETE_PLAYER", playerId);
+      try {
+        await dbService.delete("players", playerId);
+        commit("DELETE_PLAYER", playerId);
+      } catch (error) {
+        console.error("Error deleting player:", error);
+        throw error; // Re-throw the error so it can be caught in the component
+      }
     },
   },
   modules: {},

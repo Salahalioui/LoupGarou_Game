@@ -17,7 +17,7 @@
           v-if="selectedPlayer && !showAddForm && !editingPlayer"
           :player="selectedPlayer"
           @edit-player="editPlayer"
-          @delete-player="deletePlayer"
+          @delete-player="handleDeletePlayer"
         />
       </div>
     </div>
@@ -59,9 +59,14 @@ export default {
     editPlayer(player) {
       this.editingPlayer = player;
     },
-    async deletePlayer(playerId) {
-      await this.deletePlayer(playerId);
-      this.selectedPlayer = null;
+    async handleDeletePlayer(playerId) {
+      try {
+        await this.deletePlayer(playerId);
+        this.selectedPlayer = null;
+      } catch (error) {
+        console.error("Error deleting player:", error);
+        // Handle the error (e.g., show an error message to the user)
+      }
     },
     cancelForm() {
       this.showAddForm = false;
