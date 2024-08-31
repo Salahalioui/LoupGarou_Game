@@ -12,5 +12,6 @@ module.exports = defineConfig({
       skipWaiting: true,
       clientsClaim: true,
     },
+    serviceWorker: true,
   },
 });
