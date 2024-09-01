@@ -65,6 +65,15 @@ export default {
       await this.deleteRole(roleId);
       this.selectedRole = null;
     },
+    async handleDeleteRole(roleId) {
+      try {
+        await this.deleteRole(roleId);
+        this.selectedRole = null;
+      } catch (error) {
+        console.error("Error deleting role:", error);
+        // Handle the error (e.g., show an error message to the user)
+      }
+    },
   },
 };
 </script>

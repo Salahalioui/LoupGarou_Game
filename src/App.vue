@@ -50,6 +50,12 @@ export default {
       isRTL: false,
     };
   },
+  computed: {
+    // eslint-disable-next-line vue/no-dupe-keys
+    isRTL() {
+      return this.$i18n.locale === "ar-DZ";
+    },
+  },
   methods: {
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;

@@ -1,41 +1,39 @@
 <template>
   <div class="player-role-reveal">
-    <h3>{{ $t("playerRoleReveal.title") }}</h3>
-    <div v-if="currentPlayer" class="reveal-container">
+    <h3>Player Role Reveal</h3>
+    <div v-if="currentPlayer" class="player-card">
       <h4>{{ currentPlayer.name }}</h4>
-      <button v-if="!isRevealed" @click="revealRole" class="reveal-button">
-        {{ $t("playerRoleReveal.revealRole") }}
-      </button>
-      <div v-else class="role-info">
+      <div class="role-info" :class="{ 'role-hidden': !isRevealed }">
         <img
-          :src="currentRole.image"
-          :alt="$t(`roles.${currentRole.id}.name`)"
+          v-if="currentPlayer.role.image"
+          :src="currentPlayer.role.image"
+          :alt="currentPlayer.role.name"
           class="role-image"
         />
-        <h5 class="role-name">{{ $t(`roles.${currentRole.id}.name`) }}</h5>
-        <p class="role-description">
-          {{ $t(`roles.${currentRole.id}.description`) }}
-        </p>
+        <div v-else class="role-image placeholder-image">
+          {{ currentPlayer.role.name[0] }}
+        </div>
+        <p class="role-name">{{ currentPlayer.role.name }}</p>
       </div>
+      <button @click="toggleReveal" class="reveal-button">
+        {{ isRevealed ? "Hide" : "Reveal" }} Role
+      </button>
     </div>
     <div class="navigation-buttons">
-      <button @click="previousPlayer" :disabled="currentIndex === 0">
-        {{ $t("playerRoleReveal.previous") }}
+      <button @click="previousPlayer" :disabled="currentPlayerIndex === 0">
+        &larr; Previous
       </button>
+      <div class="player-counter">
+        {{ currentPlayerIndex + 1 }} / {{ playersWithRoles.length }}
+      </div>
       <button
         @click="nextPlayer"
-        :disabled="currentIndex === players.length - 1"
+        :disabled="currentPlayerIndex === playersWithRoles.length - 1"
       >
-        {{ $t("playerRoleReveal.next") }}
+        Next &rarr;
       </button>
     </div>
-    <button
-      @click="finishReveal"
-      class="finish-button"
-      :disabled="!allRevealed"
-    >
-      {{ $t("playerRoleReveal.finish") }}
-    </button>
+    <button @click="finishReveal" class="finish-button">Finish Reveal</button>
   </div>
 </template>
 
@@ -53,55 +51,70 @@ export default {
   },
   data() {
     return {
-      currentIndex: 0,
-      revealedRoles: {},
-      allRoles: [...getPredefinedRoles(), ...this.roles],
+      playersWithRoles: [],
+      currentPlayerIndex: 0,
+      isRevealed: false,
     };
   },
   computed: {
     ...mapState(["players", "roles"]),
+    allRoles() {
+      return [...getPredefinedRoles(), ...this.roles];
+    },
     currentPlayer() {
-      return this.players.find(
-        (player) => player.id === this.gameSetup.players[this.currentIndex]
-      );
-    },
-    currentRole() {
-      return this.revealedRoles[this.currentPlayer.id];
-    },
-    isRevealed() {
-      return !!this.currentRole;
-    },
-    allRevealed() {
-      return (
-        Object.keys(this.revealedRoles).length === this.gameSetup.players.length
-      );
+      return this.playersWithRoles[this.currentPlayerIndex];
     },
   },
   methods: {
-    revealRole() {
-      const availableRoles = this.getAvailableRoles();
-      const randomRole =
-        availableRoles[Math.floor(Math.random() * availableRoles.length)];
-      this.$set(this.revealedRoles, this.currentPlayer.id, randomRole);
+    toggleReveal() {
+      this.isRevealed = !this.isRevealed;
+    },
+    assignRolesToPlayers() {
+      const selectedPlayers = this.players.filter((player) =>
+        this.gameSetup.players.includes(player.id)
+      );
+      const rolesToAssign = this.createRoleArray();
+
+      this.playersWithRoles = selectedPlayers.map((player, index) => ({
+        ...player,
+        role: rolesToAssign[index],
+      }));
+    },
+    createRoleArray() {
+      const rolesToAssign = [];
+      for (const [roleId, count] of Object.entries(this.gameSetup.roles)) {
+        const role = this.allRoles.find((r) => r.id === roleId);
+        for (let i = 0; i < count; i++) {
+          rolesToAssign.push(role);
+        }
+      }
+      return this.shuffleArray(rolesToAssign);
+    },
+    shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     },
     previousPlayer() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
+      if (this.currentPlayerIndex > 0) {
+        this.currentPlayerIndex--;
+        this.isRevealed = false;
       }
     },
     nextPlayer() {
-      if (this.currentIndex < this.gameSetup.players.length - 1) {
-        this.currentIndex++;
+      if (this.currentPlayerIndex < this.playersWithRoles.length - 1) {
+        this.currentPlayerIndex++;
+        this.isRevealed = false;
       }
     },
     finishReveal() {
-      if (this.allRevealed) {
-        this.$emit("roles-revealed", this.revealedRoles);
-      }
+      this.$emit("roles-revealed");
     },
-    getAvailableRoles() {
-      // ... (implementation remains the same)
-    },
+  },
+  mounted() {
+    this.assignRolesToPlayers();
   },
 };
 </script>

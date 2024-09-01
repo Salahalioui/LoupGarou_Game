@@ -90,15 +90,10 @@ export default {
     handleAvatarUpload(event) {
       const file = event.target.files[0];
       if (file) {
-        // Instead of storing the File object or a blob URL, let's store the file name
         this.player.avatar = file.name;
-
-        // If you want to display a preview, you can still create a local URL
         this.avatarPreview = URL.createObjectURL(file);
-
-        // Here you would typically upload the file to a server and get a URL back
-        // For now, we'll just simulate this with a placeholder URL
-        // this.player.avatarUrl = `https://example.com/avatars/${file.name}`
+        // In a real app, you'd upload the file to a server here
+        this.player.avatarUrl = this.avatarPreview;
       }
     },
   },
