@@ -1,20 +1,27 @@
 <template>
   <div class="role-form">
-    <h3>{{ isEditing ? "Edit Role" : "Add New Role" }}</h3>
+    <h3>
+      {{ isEditing ? $t("roleForm.editRole") : $t("roleForm.addNewRole") }}
+    </h3>
     <form @submit.prevent="submitRole">
       <div class="form-group">
-        <label for="roleName">Role Name:</label>
+        <label for="roleName">{{ $t("roleForm.roleName") }}</label>
         <input type="text" id="roleName" v-model="role.name" required />
       </div>
       <div class="form-group">
-        <label for="roleDescription">Description:</label>
+        <label for="roleDescription">{{ $t("roleForm.description") }}</label>
         <textarea
           id="roleDescription"
           v-model="role.description"
           required
         ></textarea>
       </div>
-      <button type="submit">{{ isEditing ? "Update" : "Add" }} Role</button>
+      <button type="submit">
+        {{ isEditing ? $t("roleForm.update") : $t("roleForm.add") }}
+      </button>
+      <button type="button" @click="$emit('cancel')">
+        {{ $t("roleForm.cancel") }}
+      </button>
     </form>
   </div>
 </template>

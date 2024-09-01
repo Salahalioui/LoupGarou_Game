@@ -1,8 +1,8 @@
 <template>
   <div class="game-setup">
-    <h3 class="setup-title">Game Setup</h3>
+    <h3 class="setup-title">{{ $t("gameSetup.title") }}</h3>
     <div class="setup-section">
-      <h4 class="section-subtitle">Select Players</h4>
+      <h4 class="section-subtitle">{{ $t("gameSetup.selectPlayers") }}</h4>
       <div class="player-grid">
         <div v-for="player in players" :key="player.id" class="player-item">
           <input
@@ -16,11 +16,15 @@
       </div>
     </div>
     <div class="setup-section">
-      <h4 class="section-subtitle">Select Roles</h4>
+      <h4 class="section-subtitle">{{ $t("gameSetup.selectRoles") }}</h4>
       <div class="role-grid">
         <div v-for="role in allRoles" :key="role.id" class="role-item">
-          <img :src="role.image" :alt="role.name" class="role-image" />
-          <span class="role-name">{{ role.name }}</span>
+          <img
+            :src="role.image"
+            :alt="$t(`roles.${role.id}.name`)"
+            class="role-image"
+          />
+          <span class="role-name">{{ $t(`roles.${role.id}.name`) }}</span>
           <div class="role-counter">
             <button
               @click="decrementRole(role.id)"
@@ -29,20 +33,25 @@
               -
             </button>
             <span>{{ roleCount[role.id] || 0 }}</span>
-            <button @click="incrementRole(role.id)">+</button>
+            <button
+              @click="incrementRole(role.id)"
+              :disabled="totalRoles >= selectedPlayers.length"
+            >
+              +
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <button @click="startGame" :disabled="!isGameReady" class="start-game-btn">
-      Start Game
+    <button @click="startGame" :disabled="!isValidSetup" class="start-game-btn">
+      {{ $t("gameSetup.startGame") }}
     </button>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { predefinedRoles } from "@/data/predefinedRoles";
+import { mapState } from "vuex";
+import { getPredefinedRoles } from "@/data/predefinedRoles";
 
 export default {
   name: "GameSetupComponent",
@@ -55,21 +64,22 @@ export default {
   computed: {
     ...mapState(["players", "roles"]),
     allRoles() {
-      return [...predefinedRoles, ...this.roles];
+      return [...getPredefinedRoles(), ...this.roles];
     },
-    isGameReady() {
-      const totalRoles = Object.values(this.roleCount).reduce(
-        (a, b) => a + b,
+    totalRoles() {
+      return Object.values(this.roleCount).reduce(
+        (sum, count) => sum + count,
         0
       );
+    },
+    isValidSetup() {
       return (
         this.selectedPlayers.length > 0 &&
-        this.selectedPlayers.length === totalRoles
+        this.totalRoles === this.selectedPlayers.length
       );
     },
   },
   methods: {
-    ...mapActions(["addGame"]),
     incrementRole(roleId) {
       this.roleCount[roleId] = (this.roleCount[roleId] || 0) + 1;
     },
@@ -78,14 +88,12 @@ export default {
         this.roleCount[roleId]--;
       }
     },
-    async startGame() {
-      if (this.isGameReady) {
+    startGame() {
+      if (this.isValidSetup) {
         const gameSetup = {
           players: this.selectedPlayers,
           roles: this.roleCount,
-          date: new Date().toISOString(),
         };
-        await this.addGame(gameSetup);
         this.$emit("game-start", gameSetup);
       }
     },

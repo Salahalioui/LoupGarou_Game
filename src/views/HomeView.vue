@@ -1,32 +1,30 @@
 <template>
   <div class="home-view">
     <div class="hero-section">
-      <h1 class="hero-title">Welcome to Werewolf Moderator</h1>
-      <p class="hero-subtitle">Manage your Werewolf games with ease!</p>
+      <h1 class="hero-title">{{ $t("home.welcome") }}</h1>
+      <p class="hero-subtitle">{{ $t("home.subtitle") }}</p>
     </div>
     <div class="features-section">
       <div class="feature-card">
         <i class="fas fa-users feature-icon"></i>
-        <h3>Manage Players</h3>
-        <p>Easily add, edit, and organize your player roster.</p>
+        <h3>{{ $t("home.features.managePlayers") }}</h3>
+        <p>{{ $t("home.features.managePlayersDesc") }}</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-theater-masks feature-icon"></i>
-        <h3>Assign Roles</h3>
-        <p>Randomly assign roles or customize your game setup.</p>
+        <h3>{{ $t("home.features.assignRoles") }}</h3>
+        <p>{{ $t("home.features.assignRolesDesc") }}</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-hourglass-half feature-icon"></i>
-        <h3>Game Flow</h3>
-        <p>
-          Guide your game through day and night phases with built-in timers.
-        </p>
+        <h3>{{ $t("home.features.gameFlow") }}</h3>
+        <p>{{ $t("home.features.gameFlowDesc") }}</p>
       </div>
     </div>
     <div class="cta-section">
-      <router-link to="/game" class="btn btn-primary"
-        >Start a New Game</router-link
-      >
+      <router-link to="/game" class="btn btn-primary">{{
+        $t("home.startGame")
+      }}</router-link>
     </div>
   </div>
 </template>

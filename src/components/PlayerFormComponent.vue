@@ -1,13 +1,17 @@
 <template>
   <div class="player-form">
-    <h3>{{ isEditing ? "Edit Player" : "Add New Player" }}</h3>
+    <h3>
+      {{
+        isEditing ? $t("playerForm.editPlayer") : $t("playerForm.addNewPlayer")
+      }}
+    </h3>
     <form @submit.prevent="submitPlayer">
       <div class="form-group">
-        <label for="playerName">Player Name:</label>
+        <label for="playerName">{{ $t("playerForm.playerName") }}</label>
         <input type="text" id="playerName" v-model="player.name" required />
       </div>
       <div class="form-group">
-        <label for="playerAvatar">Avatar:</label>
+        <label for="playerAvatar">{{ $t("playerForm.avatar") }}</label>
         <input
           type="file"
           id="playerAvatar"
@@ -23,14 +27,14 @@
       </div>
       <div class="form-actions">
         <button type="submit" class="btn btn-primary">
-          {{ isEditing ? "Update" : "Add" }} Player
+          {{ isEditing ? $t("playerForm.update") : $t("playerForm.add") }}
         </button>
         <button
           type="button"
           class="btn btn-secondary"
           @click="$emit('cancel')"
         >
-          Cancel
+          {{ $t("playerForm.cancel") }}
         </button>
       </div>
     </form>

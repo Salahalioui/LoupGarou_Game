@@ -1,11 +1,11 @@
 <template>
   <div class="role-library">
-    <h2 class="section-title">Role Library</h2>
+    <h2 class="section-title">{{ $t("roleLibrary.title") }}</h2>
     <div class="role-container">
       <div class="role-list-container">
         <RoleListComponent @role-selected="selectRole" />
         <button @click="showAddForm = true" class="add-role-btn">
-          <i class="fas fa-plus"></i> Add New Role
+          {{ $t("roleLibrary.addRole") }}
         </button>
       </div>
       <div class="role-detail-container">
@@ -16,7 +16,7 @@
           @cancel="cancelForm"
         />
         <RoleDetailComponent
-          v-if="selectedRole && !showAddForm && !editingRole"
+          v-else-if="selectedRole"
           :role="selectedRole"
           @edit-role="editRole"
           @delete-role="deleteRole"

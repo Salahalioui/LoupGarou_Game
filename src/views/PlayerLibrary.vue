@@ -1,11 +1,13 @@
 <template>
   <div class="player-library">
-    <h2 class="section-title">Player Library</h2>
+    <h2 class="section-title">{{ $t("playerLibrary.title") }}</h2>
     <div class="player-container">
-      <PlayerListComponent
-        @player-selected="selectPlayer"
-        @add-player="showAddForm = true"
-      />
+      <div class="player-list-container">
+        <PlayerListComponent
+          @player-selected="selectPlayer"
+          @add-player="showAddForm = true"
+        />
+      </div>
       <div class="player-detail-container">
         <PlayerFormComponent
           v-if="showAddForm || editingPlayer"
@@ -14,7 +16,7 @@
           @cancel="cancelForm"
         />
         <PlayerDetailComponent
-          v-if="selectedPlayer && !showAddForm && !editingPlayer"
+          v-else-if="selectedPlayer"
           :player="selectedPlayer"
           @edit-player="editPlayer"
           @delete-player="handleDeletePlayer"

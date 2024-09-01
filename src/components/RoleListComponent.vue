@@ -1,6 +1,6 @@
 <template>
   <div class="role-list">
-    <h3 class="list-title">Available Roles</h3>
+    <h3 class="list-title">{{ $t("roleList.availableRoles") }}</h3>
     <div class="role-cards">
       <div
         v-for="role in allRoles"
@@ -8,8 +8,12 @@
         class="role-card"
         @click="selectRole(role)"
       >
-        <img :src="role.image" :alt="role.name" class="role-image" />
-        <h4 class="role-name">{{ role.name }}</h4>
+        <img
+          :src="role.image"
+          :alt="$t(`roles.${role.id}.name`)"
+          class="role-image"
+        />
+        <h4 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h4>
       </div>
     </div>
   </div>
@@ -17,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { predefinedRoles } from "@/data/predefinedRoles";
+import { getPredefinedRoles } from "@/data/predefinedRoles";
 
 export default {
   name: "RoleListComponent",
@@ -25,7 +29,7 @@ export default {
     ...mapState(["roles"]),
     allRoles() {
       // Combine predefined roles with custom roles
-      return [...predefinedRoles, ...this.roles];
+      return [...getPredefinedRoles(), ...this.roles];
     },
   },
   methods: {

@@ -1,33 +1,41 @@
 <template>
-  <div id="app" :class="{ 'dark-mode': isDarkMode }">
+  <div id="app" :class="{ 'dark-mode': isDarkMode, rtl: isRTL }">
     <header class="app-header">
-      <h1 class="app-title">Werewolf Moderator</h1>
+      <h1 class="app-title">{{ $t("app.title") }}</h1>
       <button @click="toggleMenu" class="menu-toggle">
         <i class="fas fa-bars"></i>
       </button>
       <nav class="app-nav" :class="{ 'nav-open': isMenuOpen }">
-        <router-link to="/" class="nav-link" @click="closeMenu"
-          >Home</router-link
-        >
-        <router-link to="/roles" class="nav-link" @click="closeMenu"
-          >Roles</router-link
-        >
-        <router-link to="/players" class="nav-link" @click="closeMenu"
-          >Players</router-link
-        >
-        <router-link to="/game" class="nav-link" @click="closeMenu"
-          >Game</router-link
-        >
+        <router-link to="/" class="nav-link" @click="closeMenu">{{
+          $t("app.nav.home")
+        }}</router-link>
+        <router-link to="/roles" class="nav-link" @click="closeMenu">{{
+          $t("app.nav.roles")
+        }}</router-link>
+        <router-link to="/players" class="nav-link" @click="closeMenu">{{
+          $t("app.nav.players")
+        }}</router-link>
+        <router-link to="/game" class="nav-link" @click="closeMenu">{{
+          $t("app.nav.game")
+        }}</router-link>
       </nav>
       <button @click="toggleDarkMode" class="dark-mode-toggle">
         {{ isDarkMode ? "☀️" : "🌙" }}
       </button>
+      <select
+        v-model="$i18n.locale"
+        @change="updateDirection"
+        class="language-select"
+      >
+        <option value="en">English</option>
+        <option value="ar-DZ">العربية (الجزائر)</option>
+      </select>
     </header>
     <main class="app-main">
       <router-view></router-view>
     </main>
     <footer class="app-footer">
-      <p>&copy; 2023 Werewolf Moderator</p>
+      <p>&copy; 2023 {{ $t("app.title") }}</p>
     </footer>
   </div>
 </template>
@@ -39,6 +47,7 @@ export default {
     return {
       isDarkMode: false,
       isMenuOpen: false,
+      isRTL: false,
     };
   },
   methods: {
@@ -52,9 +61,14 @@ export default {
     closeMenu() {
       this.isMenuOpen = false;
     },
+    updateDirection() {
+      this.isRTL = this.$i18n.locale === "ar-DZ";
+      document.documentElement.dir = this.isRTL ? "rtl" : "ltr";
+    },
   },
   mounted() {
     this.isDarkMode = localStorage.getItem("darkMode") === "true";
+    this.updateDirection();
   },
 };
 </script>
@@ -257,6 +271,43 @@ body {
     border: 1px solid #ccc;
     border-radius: $border-radius;
     font-size: 1rem;
+  }
+}
+
+.language-select {
+  margin-left: 1rem;
+  padding: 0.25rem;
+  background-color: white;
+  border: 1px solid $primary-color;
+  border-radius: $border-radius;
+  color: $text-color;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+
+  .app-header {
+    flex-direction: row-reverse;
+  }
+
+  .app-nav {
+    left: auto;
+    right: -100%;
+
+    &.nav-open {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .language-select {
+    margin-left: 1rem;
+    padding: 0.25rem;
+    background-color: white;
+    border: 1px solid $primary-color;
+    border-radius: $border-radius;
+    color: $text-color;
   }
 }
 </style>

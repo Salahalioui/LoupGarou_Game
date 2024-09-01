@@ -1,11 +1,19 @@
 <template>
   <div v-if="role" class="role-detail">
-    <img :src="role.image" :alt="role.name" class="role-image" />
-    <h3 class="role-name">{{ role.name }}</h3>
-    <p class="role-description">{{ role.description }}</p>
+    <img
+      :src="role.image"
+      :alt="$t(`roles.${role.id}.name`)"
+      class="role-image"
+    />
+    <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
+    <p class="role-description">{{ $t(`roles.${role.id}.description`) }}</p>
     <div class="role-actions">
-      <button @click="editRole" class="edit-btn">Edit</button>
-      <button @click="deleteRole" class="delete-btn">Delete</button>
+      <button @click="editRole" class="edit-btn">
+        {{ $t("roleDetail.edit") }}
+      </button>
+      <button @click="deleteRole" class="delete-btn">
+        {{ $t("roleDetail.delete") }}
+      </button>
     </div>
   </div>
 </template>
@@ -24,7 +32,13 @@ export default {
       this.$emit("edit-role", this.role);
     },
     deleteRole() {
-      if (confirm(`Are you sure you want to delete ${this.role.name}?`)) {
+      if (
+        confirm(
+          this.$t("roleDetail.confirmDelete", {
+            name: this.$t(`roles.${this.role.id}.name`),
+          })
+        )
+      ) {
         this.$emit("delete-role", this.role.id);
       }
     },

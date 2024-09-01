@@ -12,7 +12,7 @@
       </div>
     </div>
     <button @click="$emit('add-player')" class="btn btn-primary add-player-btn">
-      <i class="fas fa-plus"></i> Add New Player
+      <i class="fas fa-plus"></i> {{ $t("playerList.addNewPlayer") }}
     </button>
   </div>
 </template>

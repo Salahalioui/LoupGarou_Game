@@ -1,136 +1,136 @@
-export const predefinedRoles = [
+import { createI18n } from "vue-i18n";
+import en from "@/locales/en.json";
+import arDZ from "@/locales/ar-DZ.json";
+
+const i18n = createI18n({
+  legacy: false,
+  locale: "en",
+  fallbackLocale: "en",
+  messages: {
+    en,
+    "ar-DZ": arDZ,
+  },
+});
+
+export const getPredefinedRoles = () => [
   {
     id: "werewolf",
-    name: "Werewolf",
-    description: "A villager-eating werewolf",
+    name: i18n.global.t("roles.werewolf.name"),
+    description: i18n.global.t("roles.werewolf.description"),
     image: require("@/assets/images/roles/werewolf.jpeg"),
   },
   {
     id: "villager",
-    name: "Villager",
-    description: "A regular villager",
+    name: i18n.global.t("roles.villager.name"),
+    description: i18n.global.t("roles.villager.description"),
     image: require("@/assets/images/roles/villager.jpeg"),
   },
   {
     id: "seer",
-    name: "Seer",
-    description: "Can see the true identity of one player each night",
+    name: i18n.global.t("roles.seer.name"),
+    description: i18n.global.t("roles.seer.description"),
     image: require("@/assets/images/roles/Seer.jpeg"),
   },
   {
     id: "town_guard",
-    name: "Town Guard",
-    description: "Can protect one player each night from being eliminated",
+    name: i18n.global.t("roles.townGuard.name"),
+    description: i18n.global.t("roles.townGuard.description"),
     image: require("@/assets/images/roles/Knight.jpeg"),
   },
   {
     id: "hunter",
-    name: "Hunter",
-    description: "Can eliminate one player when they are eliminated",
+    name: i18n.global.t("roles.hunter.name"),
+    description: i18n.global.t("roles.hunter.description"),
     image: require("@/assets/images/roles/Hunter.jpeg"),
   },
   {
     id: "witch",
-    name: "Witch",
-    description:
-      "Has a poison and a potion that can be used to save a player or eliminate a player",
+    name: i18n.global.t("roles.witch.name"),
+    description: i18n.global.t("roles.witch.description"),
     image: require("@/assets/images/roles/Witch.jpeg"),
   },
   {
-    id: "The Priest",
-    name: "The Priest",
-    description:
-      "he can spray a player with holy water if that Player is a werewolf , he will be eliminated",
+    id: "priest",
+    name: i18n.global.t("roles.priest.name"),
+    description: i18n.global.t("roles.priest.description"),
     image: require("@/assets/images/roles/Priest.jpeg"),
   },
-
   {
-    id: "The Detective",
-    name: "The Detective",
-    description:
-      "Can investigate two players each night to see if they are in the same team",
+    id: "detective",
+    name: i18n.global.t("roles.detective.name"),
+    description: i18n.global.t("roles.detective.description"),
     image: require("@/assets/images/roles/Detective.jpeg"),
   },
   {
-    id: "The Theif",
-    name: "The Theif",
-    description:
-      "Can switch his identity with another player once during the game, if the other player is a werewolf, he will become a werewolf and if the other player is a villager with a role that has not been revealed, he will become that role",
+    id: "thief",
+    name: i18n.global.t("roles.thief.name"),
+    description: i18n.global.t("roles.thief.description"),
     image: require("@/assets/images/roles/Theif.jpeg"),
   },
   {
-    id: "The Judge",
-    name: "The Judge",
-    description:
-      "Can invoke the voting of the players once during the game, the player who is voted out will not be eliminated",
+    id: "judge",
+    name: i18n.global.t("roles.judge.name"),
+    description: i18n.global.t("roles.judge.description"),
     image: require("@/assets/images/roles/Judge.jpeg"),
   },
   {
-    id: "The Crow",
-    name: "The Crow",
-    description:
-      "he chose a player , during the voting that player will hold two votes",
+    id: "crow",
+    name: i18n.global.t("roles.crow.name"),
+    description: i18n.global.t("roles.crow.description"),
     image: require("@/assets/images/roles/Crow.jpeg"),
   },
   {
-    id: "The Elder",
-    name: "The Elder",
-    description:
-      "if he eliminated by the villagers, the villagers actions will be cancelled",
+    id: "elder",
+    name: i18n.global.t("roles.elder.name"),
+    description: i18n.global.t("roles.elder.description"),
     image: require("@/assets/images/roles/Elder.jpeg"),
   },
   {
-    id: "The Patient",
-    name: "The Patient",
-    description:
-      "if he is eliminated by the werewolves, the werewolves will lose their night actions , and if the villagers voted him out , the werewolves will kill twice",
+    id: "patient",
+    name: i18n.global.t("roles.patient.name"),
+    description: i18n.global.t("roles.patient.description"),
     image: require("@/assets/images/roles/Patient.jpeg"),
   },
   {
     id: "scapegoat",
-    name: "Scapegoat",
-    description: "he can chose to be eliminated instead of another player",
+    name: i18n.global.t("roles.scapegoat.name"),
+    description: i18n.global.t("roles.scapegoat.description"),
     image: require("@/assets/images/roles/Goat.jpeg"),
   },
   {
-    id: "The Big Bad Wolf",
-    name: "The Big Bad Wolf",
-    description:
-      "he is the werewolf leader, he can choose to eliminate one player each night, and can chose the change a werewolf with a villager (the werewolve will be eliminated",
+    id: "bigBadWolf",
+    name: i18n.global.t("roles.bigBadWolf.name"),
+    description: i18n.global.t("roles.bigBadWolf.description"),
     image: require("@/assets/images/roles/BlackWolf.jpeg"),
   },
   {
-    id: "The Wolf Cub",
-    name: "The Wolf Cub",
-    description:
-      "when eliminated by the villagers, the werewolves will kill one more player",
+    id: "wolfCub",
+    name: i18n.global.t("roles.wolfCub.name"),
+    description: i18n.global.t("roles.wolfCub.description"),
     image: require("@/assets/images/roles/Cupwolf.jpeg"),
   },
   {
-    id: "The Seer Werewolf",
-    name: "The Seer Werewolf",
-    description: "he can reveal the true identity of once per Game",
+    id: "seerWerewolf",
+    name: i18n.global.t("roles.seerWerewolf.name"),
+    description: i18n.global.t("roles.seerWerewolf.description"),
     image: require("@/assets/images/roles/wolve_seer.jpeg"),
   },
   {
-    id: "The White Werewolf",
-    name: "The White Werewolf",
-    description:
-      "lone wolf , he can kill a werewolf each two nights , he only wins if he is the only werewolf surviving",
+    id: "whiteWerewolf",
+    name: i18n.global.t("roles.whiteWerewolf.name"),
+    description: i18n.global.t("roles.whiteWerewolf.description"),
     image: require("@/assets/images/roles/WhiteWolf.jpeg"),
   },
   {
-    id: "The Drunk",
-    name: "The Drunk",
-    description:
-      "Loner Role , when he is eliminated by the villagers, him only will win the  game",
+    id: "drunk",
+    name: i18n.global.t("roles.drunk.name"),
+    description: i18n.global.t("roles.drunk.description"),
     image: require("@/assets/images/roles/Drunk.jpeg"),
   },
   {
-    id: "Coupid",
-    name: "Coupid",
-    description:
-      "in the first night he can chose two players to fell in love , if one of those player elimineted the other player will be eliminated too , the coupid will only win when the two players are the only ones surviving",
+    id: "cupid",
+    name: i18n.global.t("roles.cupid.name"),
+    description: i18n.global.t("roles.cupid.description"),
     image: require("@/assets/images/roles/Coupid.jpeg"),
   },
 ];

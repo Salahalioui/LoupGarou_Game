@@ -1,12 +1,17 @@
 <template>
   <div v-if="player" class="player-detail">
-    <div class="player-info">
-      <div class="player-avatar">{{ player.name[0] }}</div>
-      <h3 class="player-name">{{ player.name }}</h3>
+    <div class="player-avatar">
+      <img v-if="player.avatar" :src="player.avatar" :alt="player.name" />
+      <span v-else>{{ player.name[0] }}</span>
     </div>
+    <h3 class="player-name">{{ player.name }}</h3>
     <div class="player-actions">
-      <button @click="editPlayer" class="btn btn-primary">Edit</button>
-      <button @click="deletePlayer" class="btn btn-danger">Delete</button>
+      <button @click="editPlayer" class="edit-btn">
+        {{ $t("playerDetail.edit") }}
+      </button>
+      <button @click="deletePlayer" class="delete-btn">
+        {{ $t("playerDetail.delete") }}
+      </button>
     </div>
   </div>
 </template>
@@ -25,7 +30,11 @@ export default {
       this.$emit("edit-player", this.player);
     },
     deletePlayer() {
-      if (confirm(`Are you sure you want to delete ${this.player.name}?`)) {
+      if (
+        confirm(
+          this.$t("playerDetail.confirmDelete", { name: this.player.name })
+        )
+      ) {
         this.$emit("delete-player", this.player.id);
       }
     },
