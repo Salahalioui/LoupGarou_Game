@@ -75,7 +75,16 @@ export default {
       );
       const rolesToAssign = this.createRoleArray();
 
-      this.playersWithRoles = selectedPlayers.map((player, index) => ({
+      // Ensure the number of players matches the number of roles
+      if (selectedPlayers.length !== rolesToAssign.length) {
+        console.error("Mismatch between number of players and roles");
+        return;
+      }
+
+      // Shuffle the players array
+      const shuffledPlayers = this.shuffleArray([...selectedPlayers]);
+
+      this.playersWithRoles = shuffledPlayers.map((player, index) => ({
         ...player,
         role: rolesToAssign[index],
       }));
@@ -85,7 +94,7 @@ export default {
       for (const [roleId, count] of Object.entries(this.gameSetup.roles)) {
         const role = this.allRoles.find((r) => r.id === roleId);
         for (let i = 0; i < count; i++) {
-          rolesToAssign.push(role);
+          rolesToAssign.push({ ...role }); // Create a new object for each role
         }
       }
       return this.shuffleArray(rolesToAssign);
