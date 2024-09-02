@@ -7,6 +7,7 @@
         @game-start="startGame"
       />
       <PlayerRoleRevealComponent
+        ref="playerRoleRevealComponent"
         v-if="gameState === 'reveal'"
         :gameSetup="gameSetup"
         @roles-revealed="startGameFlow"
@@ -45,6 +46,10 @@ export default {
       this.gameState = "reveal";
     },
     startGameFlow() {
+      this.gameSetup.roles =
+        this.$refs.playerRoleRevealComponent.playersWithRoles.map(
+          (p) => p.role
+        );
       this.gameState = "inProgress";
     },
     endGame() {

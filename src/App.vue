@@ -29,6 +29,7 @@
       >
         <option value="en">English</option>
         <option value="ar-DZ">العربية (الجزائر)</option>
+        <option value="dz-DZ">الدارجة</option>
       </select>
     </header>
     <main class="app-main">
@@ -53,7 +54,7 @@ export default {
   computed: {
     // eslint-disable-next-line vue/no-dupe-keys
     isRTL() {
-      return this.$i18n.locale === "ar-DZ";
+      return this.$i18n.locale === "ar-DZ" || this.$i18n.locale === "dz-DZ";
     },
   },
   methods: {
@@ -68,7 +69,8 @@ export default {
       this.isMenuOpen = false;
     },
     updateDirection() {
-      this.isRTL = this.$i18n.locale === "ar-DZ";
+      this.isRTL =
+        this.$i18n.locale === "ar-DZ" || this.$i18n.locale === "dz-DZ";
       document.documentElement.dir = this.isRTL ? "rtl" : "ltr";
     },
   },

@@ -133,16 +133,15 @@ export default {
       player.eliminated = !player.eliminated;
     },
     initializePlayers() {
-      const playerIds = this.gameSetup.players;
-      const roles = this.createRoleArray();
-      this.players = playerIds.map((id, index) => ({
-        id,
-        name:
-          this.$store.state.players.find((p) => p.id === id)?.name ||
-          this.$t("player", { id }),
-        role: roles[index],
-        eliminated: false,
-      }));
+      this.players = this.gameSetup.players.map((playerId, index) => {
+        const player = this.$store.state.players.find((p) => p.id === playerId);
+        return {
+          id: playerId,
+          name: player.name,
+          role: this.gameSetup.roles[index],
+          eliminated: false,
+        };
+      });
     },
     createRoleArray() {
       const roles = [];
