@@ -174,81 +174,70 @@ export default {
   height: auto;
   max-height: 60vh;
   object-fit: contain;
-  border-radius: $border-radius;
-  margin: 1rem 0;
-}
-
-.placeholder-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $secondary-color;
-  color: white;
-  font-size: 4rem;
-  font-weight: bold;
-  width: 80%;
-  height: 60vh;
+  margin-bottom: 1rem;
 }
 
 .role-name {
-  font-size: 1.5rem;
-  margin-top: 1rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
 }
 
-.reveal-button,
-.navigation-buttons button,
-.finish-button {
-  margin-top: 1rem;
+.reveal-button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: $primary-color;
-  color: white;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
+  background-color: $primary-color;
+  color: white;
   transition: background-color 0.3s ease;
 
   &:hover {
     background-color: darken($primary-color, 10%);
-  }
-
-  &:disabled {
-    background-color: lighten($primary-color, 30%);
-    cursor: not-allowed;
-  }
-}
-
-.finish-button {
-  margin-top: 2rem;
-  background-color: $secondary-color;
-
-  &:hover {
-    background-color: darken($secondary-color, 10%);
   }
 }
 
 .navigation-buttons {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   max-width: 500px;
+  margin-bottom: 1rem;
 }
 
 .player-counter {
   font-size: 1rem;
-  font-weight: bold;
 }
 
-@media (max-width: $breakpoint-tablet) {
+.finish-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  background-color: $secondary-color;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
   .player-card {
-    height: 80vh;
+    background-color: lighten($text-color, 10%);
+    color: white;
   }
 
-  .role-image,
-  .placeholder-image {
-    width: 90%;
-    height: 70vh;
+  .reveal-button,
+  .finish-button {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
   }
 }
 </style>

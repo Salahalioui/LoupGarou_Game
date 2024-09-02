@@ -198,4 +198,16 @@ export default {
     }
   }
 }
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .game-setup {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .setup-title {
+    font-size: 1.8rem;
+  }
+}
 </style>

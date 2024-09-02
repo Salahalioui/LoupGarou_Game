@@ -71,8 +71,8 @@ export default {
 }
 
 .section-title {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -81,6 +81,9 @@ export default {
   border-radius: $border-radius;
   padding: 1rem;
   box-shadow: $box-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 // Dark mode styles
@@ -99,6 +102,10 @@ export default {
 @media (min-width: $breakpoint-tablet) {
   .game-management {
     max-width: 800px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
   }
 }
 </style>
