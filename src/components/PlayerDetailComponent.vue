@@ -46,53 +46,55 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-detail {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
   text-align: center;
+  box-shadow: $box-shadow;
 }
 
 .player-info {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
 }
 
 .player-avatar {
   width: 80px;
   height: 80px;
   background-color: $primary-color;
-  color: white;
-  font-size: 2rem;
+  color: $moon-color;
+  font-size: $font-size-xlarge;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 0.5rem;
+  margin: 0 auto $spacing-small;
 }
 
 .player-name {
-  font-size: 1.2rem;
+  font-size: $font-size-large;
   margin: 0;
+  color: $text-color;
 }
 
 .player-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: $spacing-small;
 }
 
 .btn {
   flex: 1;
-  padding: 0.75rem;
-  font-size: 1rem;
+  padding: $spacing-medium;
+  font-size: $font-size-normal;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color $transition-speed ease;
 
   &-primary {
     background-color: $primary-color;
-    color: white;
+    color: $text-color;
 
     &:hover {
       background-color: darken($primary-color, 10%);
@@ -100,11 +102,11 @@ export default {
   }
 
   &-danger {
-    background-color: #e74c3c;
-    color: white;
+    background-color: $blood-color;
+    color: $text-color;
 
     &:hover {
-      background-color: darken(#e74c3c, 10%);
+      background-color: darken($blood-color, 10%);
     }
   }
 }
@@ -112,25 +114,11 @@ export default {
 // Dark mode styles
 :global(.dark-mode) {
   .player-detail {
-    background-color: lighten($text-color, 10%);
-    color: white;
+    background-color: lighten($night-color, 10%);
   }
 
   .player-avatar {
     background-color: $secondary-color;
-  }
-}
-
-// Responsive styles
-@media (min-width: $breakpoint-tablet) {
-  .player-avatar {
-    width: 100px;
-    height: 100px;
-    font-size: 2.5rem;
-  }
-
-  .player-name {
-    font-size: 1.5rem;
   }
 }
 </style>

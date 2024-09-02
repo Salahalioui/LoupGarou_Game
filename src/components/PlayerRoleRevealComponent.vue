@@ -129,29 +129,18 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-role-reveal {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  text-align: center;
+  padding: $spacing-large;
+  background-color: $wolf-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
 }
 
 .player-card {
-  background-color: white;
-  border: 1px solid $primary-color;
+  background-color: lighten($night-color, 5%);
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
 }
 
 .role-info {
@@ -183,14 +172,14 @@ export default {
 }
 
 .reveal-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
   background-color: $primary-color;
-  color: white;
-  transition: background-color 0.3s ease;
+  color: $text-color;
+  transition: background-color $transition-speed ease;
 
   &:hover {
     background-color: darken($primary-color, 10%);
@@ -202,22 +191,23 @@ export default {
   justify-content: space-between;
   width: 100%;
   max-width: 500px;
-  margin-bottom: 1rem;
+  margin: $spacing-medium auto;
 }
 
 .player-counter {
-  font-size: 1rem;
+  font-size: $font-size-normal;
+  color: $text-color;
 }
 
 .finish-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
   background-color: $secondary-color;
-  color: white;
-  transition: background-color 0.3s ease;
+  color: $text-color;
+  transition: background-color $transition-speed ease;
 
   &:hover {
     background-color: darken($secondary-color, 10%);
@@ -226,18 +216,12 @@ export default {
 
 // Dark mode styles
 :global(.dark-mode) {
-  .player-card {
-    background-color: lighten($text-color, 10%);
-    color: white;
+  .player-role-reveal {
+    background-color: lighten($night-color, 10%);
   }
 
-  .reveal-button,
-  .finish-button {
-    background-color: $primary-color;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
+  .player-card {
+    background-color: $night-color;
   }
 }
 </style>

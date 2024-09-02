@@ -84,24 +84,21 @@ export default {
 .player-library {
   max-width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: $spacing-large;
+  color: $text-color;
 }
 
 .section-title {
-  color: rgb(0, 0, 0);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  color: $moon-color;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-large;
   text-align: center;
 }
 
 .player-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-
-  @media (min-width: $breakpoint-tablet) {
-    flex-direction: row;
-  }
+  gap: $spacing-large;
 }
 
 .player-list-container,
@@ -110,22 +107,10 @@ export default {
 }
 
 .player-detail-container {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  padding: 1rem;
-}
-
-// Dark mode styles
-:global(.dark-mode) {
-  .player-library {
-    background-color: lighten($text-color, 5%);
-    color: white;
-  }
-
-  .player-detail-container {
-    background-color: lighten($text-color, 10%);
-  }
+  padding: $spacing-large;
 }
 
 // Responsive styles

@@ -1,8 +1,15 @@
 // Colors
-$primary-color: #3498db;
-$secondary-color: #2ecc71;
-$background-color: #f5f5f5;
-$text-color: #333333;
+$primary-color: #4a0e4e;  // Deep purple
+$secondary-color: #8b0000;  // Dark red
+$background-color: #1a1a2e;  // Very dark blue
+$text-color: #e0e0e0;  // Light gray
+$accent-color: #c19a6b;  // Muted gold
+
+// Additional theme colors
+$night-color: #0f1e3d;  // Dark night blue
+$wolf-color: #4d3531;  // Dark brown
+$blood-color: #8b0000;  // Blood red
+$moon-color: #f4e7d3;  // Pale yellow
 
 // Breakpoints
 $breakpoint-tablet: 768px;
@@ -10,4 +17,18 @@ $breakpoint-desktop: 1024px;
 
 // Other variables
 $border-radius: 4px;
-$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+// Font sizes
+$font-size-small: 0.875rem;
+$font-size-normal: 1rem;
+$font-size-large: 1.25rem;
+$font-size-xlarge: 1.5rem;
+
+// Spacing
+$spacing-small: 0.5rem;
+$spacing-medium: 1rem;
+$spacing-large: 1.5rem;
+
+// Transitions
+$transition-speed: 0.3s;

@@ -60,32 +60,34 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .role-list {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-large;
 }
 
 .list-title {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-size: $font-size-large;
+  margin-bottom: $spacing-medium;
   text-align: center;
+  color: $moon-color;
 }
 
 .role-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 1rem;
+  gap: $spacing-medium;
 }
 
 .role-card {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 0.5rem;
+  padding: $spacing-small;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform $transition-speed ease,
+    box-shadow $transition-speed ease;
   text-align: center;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -94,19 +96,19 @@ export default {
   height: 100px;
   object-fit: cover;
   border-radius: $border-radius;
-  margin-bottom: 0.5rem;
+  margin-bottom: $spacing-small;
 }
 
 .role-name {
-  font-size: 0.9rem;
+  font-size: $font-size-small;
   margin: 0;
+  color: $text-color;
 }
 
 // Dark mode styles
 :global(.dark-mode) {
   .role-card {
-    background-color: lighten($text-color, 10%);
-    color: white;
+    background-color: lighten($night-color, 10%);
   }
 }
 </style>

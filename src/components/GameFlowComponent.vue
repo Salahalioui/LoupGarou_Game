@@ -207,10 +207,11 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .game-flow {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
+  box-shadow: $box-shadow;
 }
 
 .game-phase,
@@ -218,7 +219,19 @@ export default {
 .player-status,
 .game-actions,
 .sound-controls {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-large;
+}
+
+.game-phase {
+  h4 {
+    font-size: $font-size-large;
+    color: $moon-color;
+    margin-bottom: $spacing-small;
+  }
+
+  p {
+    color: $accent-color;
+  }
 }
 
 .phase-instructions {
@@ -236,14 +249,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    background-color: lighten($primary-color, 40%);
+    margin-bottom: $spacing-small;
+    padding: $spacing-small;
+    background-color: lighten($night-color, 5%);
     border-radius: $border-radius;
 
     &.eliminated {
-      color: #888;
-      background-color: lighten($text-color, 60%);
+      color: $blood-color;
+      background-color: lighten($night-color, 10%);
     }
   }
 }
@@ -254,14 +267,15 @@ export default {
 
 .player-role {
   font-style: italic;
-  margin-left: 0.5rem;
+  margin-left: $spacing-small;
+  color: $accent-color;
 }
 
 .toggle-elimination {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8em;
+  padding: $spacing-small;
+  font-size: $font-size-small;
   background-color: $secondary-color;
-  color: white;
+  color: $text-color;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
@@ -275,16 +289,54 @@ export default {
 .end-game-btn,
 .mute-btn {
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  font-size: 1.1em;
+  padding: $spacing-medium;
+  margin-top: $spacing-small;
+  font-size: $font-size-normal;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed ease;
+}
+
+.next-phase-btn {
+  background-color: $primary-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
 }
 
 .end-game-btn {
-  background-color: #e74c3c;
+  background-color: $blood-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: darken($blood-color, 10%);
+  }
 }
 
 .mute-btn {
-  background-color: $text-color;
+  background-color: $accent-color;
+  color: $night-color;
+
+  &:hover {
+    background-color: darken($accent-color, 10%);
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .game-flow {
+    background-color: lighten($night-color, 5%);
+  }
+
+  .player-status li {
+    background-color: $night-color;
+
+    &.eliminated {
+      background-color: darken($night-color, 5%);
+    }
+  }
 }
 </style>

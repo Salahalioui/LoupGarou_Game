@@ -66,45 +66,31 @@ export default {
 .game-management {
   max-width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: $spacing-large;
+  color: $text-color;
 }
 
 .section-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-large;
   text-align: center;
+  color: $moon-color;
 }
 
 .game-container {
-  background-color: white;
+  background-color: $night-color;
   border-radius: $border-radius;
-  padding: 1rem;
+  padding: $spacing-large;
   box-shadow: $box-shadow;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-
-// Dark mode styles
-:global(.dark-mode) {
-  .game-management {
-    background-color: lighten($text-color, 5%);
-    color: white;
-  }
-
-  .game-container {
-    background-color: lighten($text-color, 10%);
-  }
+  gap: $spacing-large;
 }
 
 // Responsive styles
 @media (min-width: $breakpoint-tablet) {
   .game-management {
     max-width: 800px;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
   }
 }
 </style>

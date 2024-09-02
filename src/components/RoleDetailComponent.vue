@@ -50,11 +50,12 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .role-detail {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
   text-align: center;
+  box-shadow: $box-shadow;
 }
 
 .role-image {
@@ -62,37 +63,39 @@ export default {
   max-width: 200px;
   height: auto;
   border-radius: $border-radius;
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
 }
 
 .role-name {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-small;
+  color: $moon-color;
 }
 
 .role-description {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
+  color: $text-color;
 }
 
 .role-actions {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: $spacing-medium;
 }
 
 .edit-btn,
 .delete-btn {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color $transition-speed ease;
 }
 
 .edit-btn {
   background-color: $primary-color;
-  color: white;
+  color: $text-color;
 
   &:hover {
     background-color: darken($primary-color, 10%);
@@ -100,19 +103,18 @@ export default {
 }
 
 .delete-btn {
-  background-color: #e74c3c;
-  color: white;
+  background-color: $blood-color;
+  color: $text-color;
 
   &:hover {
-    background-color: darken(#e74c3c, 10%);
+    background-color: darken($blood-color, 10%);
   }
 }
 
 // Dark mode styles
 :global(.dark-mode) {
   .role-detail {
-    background-color: lighten($text-color, 10%);
-    color: white;
+    background-color: lighten($night-color, 10%);
   }
 }
 </style>

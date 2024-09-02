@@ -37,24 +37,31 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-list {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-large;
+}
+
+.list-title {
+  font-size: $font-size-large;
+  margin-bottom: $spacing-medium;
+  text-align: center;
+  color: $moon-color;
 }
 
 .player-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: $spacing-medium;
 }
 
 .player-card {
-  background-color: white;
-  padding: 0.5rem;
+  background-color: $wolf-color;
   border-radius: $border-radius;
+  padding: $spacing-small;
   box-shadow: $box-shadow;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform $transition-speed ease,
+    box-shadow $transition-speed ease;
 
   &:hover {
     transform: translateY(-3px);
@@ -66,34 +73,45 @@ export default {
   width: 50px;
   height: 50px;
   background-color: $primary-color;
-  color: white;
-  font-size: 1.2rem;
+  color: $moon-color;
+  font-size: $font-size-large;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 0.5rem;
+  margin: 0 auto $spacing-small;
 }
 
 .player-name {
-  font-size: 0.9rem;
+  font-size: $font-size-small;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: $text-color;
 }
 
 .add-player-btn {
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: $spacing-small;
+  padding: $spacing-small;
+  background-color: $secondary-color;
+  color: $text-color;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed ease;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
 }
 
 // Dark mode styles
 :global(.dark-mode) {
   .player-card {
-    background-color: lighten($text-color, 5%);
-    color: white;
+    background-color: lighten($night-color, 5%);
   }
 
   .player-avatar {
@@ -105,17 +123,11 @@ export default {
 @media (min-width: $breakpoint-tablet) {
   .player-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 1rem;
   }
 
   .player-avatar {
     width: 60px;
     height: 60px;
-    font-size: 1.5rem;
-  }
-
-  .player-name {
-    font-size: 1rem;
   }
 }
 </style>

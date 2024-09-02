@@ -96,34 +96,85 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .role-form {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
+  box-shadow: $box-shadow;
+}
+
+h3 {
+  font-size: $font-size-large;
+  margin-bottom: $spacing-medium;
+  color: $moon-color;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
 
   label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: $spacing-small;
+    color: $text-color;
   }
 
-  input,
+  input[type="text"],
   textarea {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid $text-color;
+    padding: $spacing-small;
+    border: 1px solid $accent-color;
     border-radius: $border-radius;
+    background-color: lighten($night-color, 10%);
+    color: $text-color;
+    font-size: $font-size-normal;
   }
 
   textarea {
     height: 100px;
+    resize: vertical;
   }
 }
 
 button {
-  width: 100%;
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed ease;
+  margin-right: $spacing-small;
+
+  &[type="submit"] {
+    background-color: $secondary-color;
+    color: $text-color;
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
+  }
+
+  &[type="button"] {
+    background-color: $primary-color;
+    color: $text-color;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .role-form {
+    background-color: lighten($night-color, 5%);
+  }
+
+  .form-group {
+    input[type="text"],
+    textarea {
+      background-color: $night-color;
+      border-color: $accent-color;
+    }
+  }
 }
 </style>

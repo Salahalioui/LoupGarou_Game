@@ -36,40 +36,44 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .home-view {
-  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-large;
+  color: $text-color;
 }
 
 .hero-section {
-  margin-bottom: 2rem;
-  padding: 2rem 1rem;
-  background-color: $primary-color;
-  color: white;
+  margin-bottom: $spacing-large;
+  padding: $spacing-large;
+  background-color: $night-color;
+  color: $moon-color;
   border-radius: $border-radius;
+  box-shadow: $box-shadow;
 }
 
 .hero-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-medium;
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
+  font-size: $font-size-large;
   opacity: 0.8;
 }
 
 .features-section {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: $spacing-large;
+  margin-bottom: $spacing-large;
 }
 
 .feature-card {
-  background-color: white;
-  padding: 1.5rem;
+  background-color: $wolf-color;
+  padding: $spacing-large;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  transition: transform 0.3s ease;
+  transition: transform $transition-speed ease;
 
   &:hover {
     transform: translateY(-5px);
@@ -78,34 +82,28 @@ export default {
 
 .feature-icon {
   font-size: 2.5rem;
-  color: $primary-color;
-  margin-bottom: 1rem;
+  color: $accent-color;
+  margin-bottom: $spacing-medium;
 }
 
 .cta-section {
-  margin-top: 2rem;
+  margin-top: $spacing-large;
 }
 
 .btn-primary {
-  font-size: 1.2rem;
-  padding: 0.75rem 1.5rem;
+  font-size: $font-size-large;
+  padding: $spacing-medium $spacing-large;
   width: 100%;
   max-width: 300px;
-}
+  background-color: $secondary-color;
+  color: $text-color;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed ease;
 
-// Dark mode styles
-:global(.dark-mode) {
-  .hero-section {
-    background-color: lighten($text-color, 10%);
-  }
-
-  .feature-card {
-    background-color: lighten($text-color, 5%);
-    color: white;
-  }
-
-  .feature-icon {
-    color: $secondary-color;
+  &:hover {
+    background-color: darken($secondary-color, 10%);
   }
 }
 
@@ -115,16 +113,8 @@ export default {
     font-size: 2.5rem;
   }
 
-  .hero-subtitle {
-    font-size: 1.3rem;
-  }
-
   .features-section {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .btn-primary {
-    width: auto;
   }
 }
 </style>

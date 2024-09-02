@@ -96,7 +96,7 @@ export default {
 
 body {
   font-family: "Roboto", sans-serif;
-  font-size: 16px;
+  font-size: $font-size-normal;
   line-height: 1.5;
   color: $text-color;
   background-color: $background-color;
@@ -120,15 +120,14 @@ body {
   background: url("@/assets/images/background.jpg") no-repeat center center
     fixed;
   background-size: cover;
-  opacity: 0.8; /* Adjust the opacity value as needed */
+  opacity: 0.6;
   z-index: -1;
 }
 
 .app-header {
-  background-color: $primary-color;
-  color: white;
-  opacity: 0.9;
-  padding: 1rem;
+  background-color: rgba($night-color, 0.9);
+  color: $moon-color;
+  padding: $spacing-medium;
   text-align: center;
   position: sticky;
   top: 0;
@@ -136,18 +135,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .app-title {
-  font-size: 1.2rem;
+  font-size: $font-size-xlarge;
   margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .menu-toggle {
   background: none;
   border: none;
-  color: white;
-  font-size: 1.5rem;
+  color: $moon-color;
+  font-size: $font-size-large;
   cursor: pointer;
 }
 
@@ -157,11 +158,11 @@ body {
   left: -100%;
   width: 100%;
   height: calc(100vh - 60px);
-  background-color: $primary-color;
-  transition: left 0.3s ease;
+  background-color: rgba($night-color, 0.95);
+  transition: left $transition-speed ease;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: $spacing-medium;
 
   &.nav-open {
     left: 0;
@@ -169,150 +170,74 @@ body {
 }
 
 .nav-link {
-  color: white;
+  color: $moon-color;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  margin: 0.25rem 0;
+  padding: $spacing-small $spacing-medium;
+  margin: $spacing-small 0;
   border-radius: $border-radius;
-  transition: background-color 0.3s ease;
+  transition: background-color $transition-speed ease;
 
   &:hover,
   &.router-link-active {
-    background-color: darken($primary-color, 10%);
+    background-color: rgba($wolf-color, 0.5);
   }
 }
 
 .app-main {
   flex-grow: 1;
-  padding: 1rem;
+  padding: $spacing-large;
   max-width: 100%;
   margin: 0 auto;
   width: 100%;
 }
 
 .app-footer {
-  background-color: $text-color;
-  color: white;
-  opacity: 0.9;
+  background-color: rgba($night-color, 0.9);
+  color: $moon-color;
   text-align: center;
-  padding: 1rem;
+  padding: $spacing-medium;
   margin-top: auto;
 }
 
 .dark-mode-toggle {
   background: none;
   border: none;
-  color: white;
-  font-size: 1.5rem;
+  color: $moon-color;
+  font-size: $font-size-large;
   cursor: pointer;
+}
+
+.language-select {
+  margin-left: $spacing-medium;
+  padding: $spacing-small;
+  background-color: rgba($wolf-color, 0.3);
+  border: 1px solid $accent-color;
+  border-radius: $border-radius;
+  color: $moon-color;
 }
 
 // Dark mode styles
 .dark-mode {
-  background-color: #121212;
-  color: #ffffff;
+  background-color: darken($background-color, 10%);
+  color: $moon-color;
 
   .app-header {
-    background-color: #1f1f1f;
+    background-color: rgba(darken($night-color, 5%), 0.9);
   }
 
   .app-footer {
-    background-color: #1f1f1f;
+    background-color: rgba(darken($night-color, 5%), 0.9);
   }
 
   .nav-link {
     &:hover,
     &.router-link-active {
-      background-color: #2c2c2c;
+      background-color: rgba(lighten($wolf-color, 10%), 0.5);
     }
   }
 }
 
-// Responsive styles
-@media (min-width: $breakpoint-tablet) {
-  .app-title {
-    font-size: 1.5rem;
-  }
-
-  .menu-toggle {
-    display: none;
-  }
-
-  .app-nav {
-    position: static;
-    height: auto;
-    flex-direction: row;
-    padding: 0;
-    background-color: transparent;
-  }
-
-  .nav-link {
-    margin: 0 0.5rem;
-  }
-
-  .app-main {
-    max-width: 800px;
-    padding: 2rem;
-  }
-}
-
-// Common component styles
-.card {
-  background-color: white;
-  border-radius: $border-radius;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: $primary-color;
-  color: white;
-  border: none;
-  border-radius: $border-radius;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-}
-
-.form-group {
-  margin-bottom: 1rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  input,
-  textarea,
-  select {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: $border-radius;
-    font-size: 1rem;
-  }
-}
-
-.language-select {
-  margin-left: 1rem;
-  padding: 0.25rem;
-  background-color: white;
-  border: 1px solid $primary-color;
-  border-radius: $border-radius;
-  color: $text-color;
-}
-
+// RTL styles
 .rtl {
   direction: rtl;
   text-align: right;
@@ -332,12 +257,86 @@ body {
   }
 
   .language-select {
-    margin-left: 1rem;
-    padding: 0.25rem;
-    background-color: white;
-    border: 1px solid $primary-color;
+    margin-left: 0;
+    margin-right: $spacing-medium;
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .app-title {
+    font-size: 2rem;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .app-nav {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .nav-link {
+    margin: 0 $spacing-small;
+  }
+
+  .app-main {
+    max-width: 800px;
+    padding: $spacing-large;
+  }
+}
+
+// Common component styles
+.card {
+  background-color: rgba($wolf-color, 0.8);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $spacing-medium;
+  margin-bottom: $spacing-medium;
+}
+
+.btn {
+  display: inline-block;
+  padding: $spacing-small $spacing-medium;
+  background-color: $primary-color;
+  color: $moon-color;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    background-color: lighten($night-color, 20%);
+    cursor: not-allowed;
+  }
+}
+
+.form-group {
+  margin-bottom: $spacing-medium;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-small;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: $spacing-small;
+    border: 1px solid $accent-color;
     border-radius: $border-radius;
-    color: $text-color;
+    font-size: $font-size-normal;
+    background-color: rgba($night-color, 0.3);
+    color: $moon-color;
   }
 }
 </style>

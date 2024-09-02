@@ -33,21 +33,26 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: $background-color;
+  color: $text-color;
 }
 
 .app-header {
-  background-color: $primary-color;
-  color: white;
-  padding: 1rem;
+  background-color: $night-color;
+  color: $moon-color;
+  padding: $spacing-medium;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .app-title {
-  margin-bottom: 0.5rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-small;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .app-nav {
-  margin-top: 1rem;
+  margin-top: $spacing-medium;
 }
 
 .nav-list {
@@ -58,30 +63,87 @@ export default {
   flex-wrap: wrap;
 
   li {
-    margin: 0 0.5rem;
+    margin: 0 $spacing-small;
   }
 
   a {
-    color: white;
+    color: $text-color;
     text-decoration: none;
-    padding: 0.5rem;
+    padding: $spacing-small;
+    border-radius: $border-radius;
+    transition: background-color $transition-speed ease,
+      color $transition-speed ease;
 
     &:hover {
-      text-decoration: underline;
+      background-color: $wolf-color;
+      color: $moon-color;
+    }
+
+    &.router-link-active {
+      background-color: $primary-color;
+      color: $moon-color;
     }
   }
 }
 
 .app-main {
   flex-grow: 1;
-  padding: 1rem;
+  padding: $spacing-large;
+  background-image: url("@/assets/images/werewolf-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .app-footer {
-  background-color: $text-color;
-  color: white;
+  background-color: $night-color;
+  color: $text-color;
   text-align: center;
-  padding: 1rem;
+  padding: $spacing-medium;
   margin-top: auto;
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .app-layout {
+    background-color: darken($background-color, 10%);
+  }
+
+  .app-header {
+    background-color: darken($night-color, 5%);
+  }
+
+  .nav-list {
+    a {
+      &:hover {
+        background-color: lighten($wolf-color, 10%);
+      }
+
+      &.router-link-active {
+        background-color: lighten($primary-color, 10%);
+      }
+    }
+  }
+
+  .app-footer {
+    background-color: darken($night-color, 5%);
+  }
+}
+
+// Responsive styles
+@media (min-width: $breakpoint-tablet) {
+  .app-title {
+    font-size: 2.5rem;
+  }
+
+  .nav-list {
+    li {
+      margin: 0 $spacing-medium;
+    }
+
+    a {
+      padding: $spacing-small $spacing-medium;
+    }
+  }
 }
 </style>

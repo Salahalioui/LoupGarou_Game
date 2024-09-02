@@ -107,38 +107,44 @@ export default {
 .game-setup {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-large;
 }
 
 .setup-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-medium;
   text-align: center;
+  color: $moon-color;
 }
 
 .setup-section {
-  background-color: lighten($background-color, 5%);
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
+  padding: $spacing-large;
+  box-shadow: $box-shadow;
 }
 
 .section-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: $font-size-large;
+  margin-bottom: $spacing-medium;
+  color: $accent-color;
 }
 
 .player-grid,
 .role-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 0.5rem;
+  gap: $spacing-medium;
 }
 
 .player-item,
 .role-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: $spacing-small;
+  background-color: lighten($night-color, 5%);
+  padding: $spacing-small;
+  border-radius: $border-radius;
 }
 
 .role-image {
@@ -150,36 +156,52 @@ export default {
 
 .role-name {
   flex: 1;
+  color: $text-color;
 }
 
 .role-counter {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: $spacing-small;
 
   button {
     width: 30px;
     height: 30px;
-    font-size: 1.2rem;
+    font-size: $font-size-large;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $primary-color;
+    color: $text-color;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: lighten($night-color, 20%);
+      cursor: not-allowed;
+    }
   }
 }
 
 .start-game-btn {
   width: 100%;
-  padding: 1rem;
-  font-size: 1.2rem;
+  padding: $spacing-medium;
+  font-size: $font-size-large;
   background-color: $secondary-color;
-  color: white;
+  color: $text-color;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
+  transition: background-color $transition-speed ease;
+
+  &:hover:not(:disabled) {
+    background-color: darken($secondary-color, 10%);
+  }
 
   &:disabled {
-    background-color: lighten($secondary-color, 20%);
+    background-color: lighten($night-color, 20%);
     cursor: not-allowed;
   }
 }
@@ -187,15 +209,12 @@ export default {
 // Dark mode styles
 :global(.dark-mode) {
   .setup-section {
-    background-color: lighten($text-color, 15%);
+    background-color: lighten($night-color, 5%);
   }
 
-  .start-game-btn {
-    background-color: $primary-color;
-
-    &:disabled {
-      background-color: darken($primary-color, 20%);
-    }
+  .player-item,
+  .role-item {
+    background-color: $night-color;
   }
 }
 

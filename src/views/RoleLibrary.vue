@@ -88,20 +88,21 @@ export default {
 .role-library {
   max-width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: $spacing-large;
+  color: $text-color;
 }
 
 .section-title {
-  color: rgb(0, 0, 0);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  color: $moon-color;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-large;
   text-align: center;
 }
 
 .role-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-large;
 }
 
 .role-list-container,
@@ -111,34 +112,18 @@ export default {
 
 .add-role-btn {
   width: 100%;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  font-size: 1rem;
+  margin-top: $spacing-medium;
+  padding: $spacing-medium;
+  font-size: $font-size-normal;
   background-color: $secondary-color;
-  color: white;
+  color: $text-color;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color $transition-speed ease;
 
   &:hover {
     background-color: darken($secondary-color, 10%);
-  }
-}
-
-// Dark mode styles
-:global(.dark-mode) {
-  .role-library {
-    background-color: lighten($text-color, 5%);
-    color: white;
-  }
-
-  .add-role-btn {
-    background-color: $primary-color;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
   }
 }
 
@@ -152,9 +137,13 @@ export default {
     flex-direction: row;
   }
 
-  .role-list-container,
+  .role-list-container {
+    flex: 1;
+    margin-right: $spacing-large;
+  }
+
   .role-detail-container {
-    width: 50%;
+    flex: 1;
   }
 }
 </style>

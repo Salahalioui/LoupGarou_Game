@@ -104,67 +104,69 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .player-form {
-  background-color: white;
+  background-color: $wolf-color;
   border-radius: $border-radius;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: $spacing-large;
+  margin-bottom: $spacing-medium;
+  box-shadow: $box-shadow;
+}
+
+h3 {
+  font-size: $font-size-large;
+  margin-bottom: $spacing-medium;
+  color: $moon-color;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
 
   label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: $spacing-small;
+    color: $text-color;
   }
 
   input {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid $text-color;
+    padding: $spacing-small;
+    border: 1px solid $accent-color;
     border-radius: $border-radius;
-    font-size: 1rem;
+    background-color: lighten($night-color, 10%);
+    color: $text-color;
+    font-size: $font-size-normal;
   }
-}
-
-.avatar-preview {
-  max-width: 100px;
-  max-height: 100px;
-  margin-top: 0.5rem;
-  border-radius: $border-radius;
 }
 
 .form-actions {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: $spacing-small;
+  margin-top: $spacing-medium;
 }
 
 .btn {
   flex: 1;
-  padding: 0.75rem;
-  font-size: 1rem;
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color $transition-speed ease;
 
   &-primary {
-    background-color: $primary-color;
-    color: white;
+    background-color: $secondary-color;
+    color: $text-color;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: darken($secondary-color, 10%);
     }
   }
 
   &-secondary {
-    background-color: $text-color;
-    color: white;
+    background-color: $primary-color;
+    color: $text-color;
 
     &:hover {
-      background-color: darken($text-color, 10%);
+      background-color: darken($primary-color, 10%);
     }
   }
 }
@@ -172,15 +174,13 @@ export default {
 // Dark mode styles
 :global(.dark-mode) {
   .player-form {
-    background-color: lighten($text-color, 10%);
-    color: white;
+    background-color: lighten($night-color, 5%);
   }
 
   .form-group {
     input {
-      background-color: lighten($text-color, 5%);
-      color: white;
-      border-color: $secondary-color;
+      background-color: $night-color;
+      border-color: $accent-color;
     }
   }
 }

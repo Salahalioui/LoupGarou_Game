@@ -21,14 +21,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/styles/variables.scss";
+
 .role-popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba($night-color, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,24 +38,31 @@ export default {
 }
 
 .popup-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
+  background: $wolf-color;
+  padding: $spacing-large;
+  border-radius: $border-radius;
   text-align: center;
   max-width: 90%;
   max-height: 90%;
   overflow-y: auto;
   position: relative;
+  box-shadow: $box-shadow;
 }
 
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: $spacing-small;
+  right: $spacing-small;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: $font-size-xlarge;
+  color: $text-color;
   cursor: pointer;
+  transition: color $transition-speed ease;
+
+  &:hover {
+    color: $blood-color;
+  }
 }
 
 .role-image {
@@ -61,15 +70,34 @@ export default {
   height: auto;
   max-height: 70vh;
   object-fit: contain;
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-medium;
+  border-radius: $border-radius;
 }
 
 .role-name {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: $font-size-xlarge;
+  margin-bottom: $spacing-medium;
+  color: $moon-color;
 }
 
 .role-description {
-  font-size: 1.2rem;
+  font-size: $font-size-normal;
+  color: $text-color;
+  line-height: 1.6;
+}
+
+// Dark mode styles
+:global(.dark-mode) {
+  .popup-content {
+    background: lighten($night-color, 5%);
+  }
+
+  .close-button {
+    color: $moon-color;
+
+    &:hover {
+      color: $blood-color;
+    }
+  }
 }
 </style>
