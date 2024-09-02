@@ -153,26 +153,34 @@
   "playerRoleReveal": {
     "title": "Player Role Reveal",
     "revealRole": "Reveal Role",
+    "hideRole": "Hide Role",
     "previous": "Previous",
     "next": "Next",
     "finish": "Finish Reveal"
   },
   "gameFlow": {
-    "title": "Game Flow",
-    "phases": {
-      "night": "Night Phase",
-      "day": "Day Phase",
-      "voting": "Voting Phase"
-    },
-    "completeAction": "Complete Action",
-    "discussion": "Discussion Time",
-    "startVoting": "Start Voting",
-    "voting": "Voting",
-    "vote": "Vote",
-    "completeVoting": "Complete Voting",
-    "playerStatus": "Player Status",
-    "alive": "Alive",
+    "title": "Game in Progress",
+    "currentPhase": "Current Phase",
+    "timeRemaining": "Time Remaining: {time} seconds",
+    "players": "Players",
     "eliminated": "Eliminated",
-    "endGame": "End Game"
+    "revive": "Revive",
+    "eliminate": "Eliminate",
+    "nextPhase": "Next Phase",
+    "endGame": "End Game",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "phases": {
+      "Night": "Night",
+      "Day Discussion": "Day Discussion",
+      "Day Voting": "Day Voting",
+      "Execution": "Execution"
+    },
+    "instructions": {
+      "Night": "Night phase: Special roles perform their actions. Werewolves choose a victim.",
+      "Day Discussion": "Day Discussion: All players discuss the events of the night and try to identify the Werewolves.",
+      "Day Voting": "Day Voting: All players vote on who to eliminate.",
+      "Execution": "Execution: The player with the most votes is eliminated. Special roles may activate."
+    }
   }
 }

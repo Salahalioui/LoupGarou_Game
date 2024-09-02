@@ -35,7 +35,7 @@
       <router-view></router-view>
     </main>
     <footer class="app-footer">
-      <p>&copy; 2023 {{ $t("app.title") }}</p>
+      <p>&copy; {{ new Date().getFullYear() }} {{ $t("app.title") }}</p>
     </footer>
   </div>
 </template>

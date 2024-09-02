@@ -1,15 +1,18 @@
 <template>
   <div class="game-flow">
-    <h3>Game in Progress</h3>
+    <h3>{{ $t("gameFlow.title") }}</h3>
     <div class="game-phase">
-      <h4>Current Phase: {{ currentPhase }}</h4>
-      <p>Time Remaining: {{ timeRemaining }} seconds</p>
+      <h4>
+        {{ $t("gameFlow.currentPhase") }}:
+        {{ $t(`gameFlow.phases.${currentPhase}`) }}
+      </h4>
+      <p>{{ $t("gameFlow.timeRemaining", { time: timeRemaining }) }}</p>
     </div>
     <div class="phase-instructions">
-      <p>{{ phaseInstructions }}</p>
+      <p>{{ $t(`gameFlow.instructions.${currentPhase}`) }}</p>
     </div>
     <div class="player-status">
-      <h4>Players</h4>
+      <h4>{{ $t("gameFlow.players") }}</h4>
       <ul>
         <li
           v-for="player in players"
@@ -19,23 +22,33 @@
           <span class="player-info">
             {{ player.name }}
             <span v-if="showRoles || player.eliminated" class="player-role">
-              - {{ player.role.name }}
+              - {{ $t(`roles.${player.role.id}.name`) }}
             </span>
-            <span v-if="player.eliminated">(Eliminated)</span>
+            <span v-if="player.eliminated"
+              >({{ $t("gameFlow.eliminated") }})</span
+            >
           </span>
           <button @click="toggleElimination(player)" class="toggle-elimination">
-            {{ player.eliminated ? "Revive" : "Eliminate" }}
+            {{
+              player.eliminated
+                ? $t("gameFlow.revive")
+                : $t("gameFlow.eliminate")
+            }}
           </button>
         </li>
       </ul>
     </div>
     <div class="game-actions">
-      <button @click="nextPhase" class="next-phase-btn">Next Phase</button>
-      <button @click="endGame" class="end-game-btn">End Game</button>
+      <button @click="nextPhase" class="next-phase-btn">
+        {{ $t("gameFlow.nextPhase") }}
+      </button>
+      <button @click="endGame" class="end-game-btn">
+        {{ $t("gameFlow.endGame") }}
+      </button>
     </div>
     <div class="sound-controls">
       <button @click="toggleMute" class="mute-btn">
-        {{ isMuted ? "Unmute" : "Mute" }}
+        {{ isMuted ? $t("gameFlow.unmute") : $t("gameFlow.mute") }}
       </button>
     </div>
   </div>
@@ -68,13 +81,13 @@ export default {
     phaseInstructions() {
       switch (this.currentPhase) {
         case "Night":
-          return "Night phase: Special roles perform their actions. Werewolves choose a victim.";
+          return this.$t("gameFlow.instructions.Night");
         case "Day Discussion":
-          return "Day Discussion: All players discuss the events of the night and try to identify the Werewolves.";
+          return this.$t("gameFlow.instructions.Day Discussion");
         case "Day Voting":
-          return "Day Voting: All players vote on who to eliminate.";
+          return this.$t("gameFlow.instructions.Day Voting");
         case "Execution":
-          return "Execution: The player with the most votes is eliminated. Special roles may activate.";
+          return this.$t("gameFlow.instructions.Execution");
         default:
           return "";
       }
@@ -126,7 +139,7 @@ export default {
         id,
         name:
           this.$store.state.players.find((p) => p.id === id)?.name ||
-          `Player ${id}`,
+          this.$t("player", { id }),
         role: roles[index],
         eliminated: false,
       }));

@@ -1,27 +1,31 @@
 <template>
   <div class="player-role-reveal">
-    <h3>Player Role Reveal</h3>
+    <h3>{{ $t("playerRoleReveal.title") }}</h3>
     <div v-if="currentPlayer" class="player-card">
       <h4>{{ currentPlayer.name }}</h4>
       <div class="role-info" :class="{ 'role-hidden': !isRevealed }">
         <img
           v-if="currentPlayer.role.image"
           :src="currentPlayer.role.image"
-          :alt="currentPlayer.role.name"
+          :alt="$t(`roles.${currentPlayer.role.id}.name`)"
           class="role-image"
         />
         <div v-else class="role-image placeholder-image">
-          {{ currentPlayer.role.name[0] }}
+          {{ $t(`roles.${currentPlayer.role.id}.name`).charAt(0) }}
         </div>
-        <p class="role-name">{{ currentPlayer.role.name }}</p>
+        <p class="role-name">{{ $t(`roles.${currentPlayer.role.id}.name`) }}</p>
       </div>
       <button @click="toggleReveal" class="reveal-button">
-        {{ isRevealed ? "Hide" : "Reveal" }} Role
+        {{
+          isRevealed
+            ? $t("playerRoleReveal.hideRole")
+            : $t("playerRoleReveal.revealRole")
+        }}
       </button>
     </div>
     <div class="navigation-buttons">
       <button @click="previousPlayer" :disabled="currentPlayerIndex === 0">
-        &larr; Previous
+        &larr; {{ $t("playerRoleReveal.previous") }}
       </button>
       <div class="player-counter">
         {{ currentPlayerIndex + 1 }} / {{ playersWithRoles.length }}
@@ -30,10 +34,12 @@
         @click="nextPlayer"
         :disabled="currentPlayerIndex === playersWithRoles.length - 1"
       >
-        Next &rarr;
+        {{ $t("playerRoleReveal.next") }} &rarr;
       </button>
     </div>
-    <button @click="finishReveal" class="finish-button">Finish Reveal</button>
+    <button @click="finishReveal" class="finish-button">
+      {{ $t("playerRoleReveal.finish") }}
+    </button>
   </div>
 </template>
 
