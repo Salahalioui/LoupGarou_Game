@@ -73,9 +73,23 @@ export default createStore({
       const games = await dbService.getAll("games");
       commit("SET_GAMES", games);
     },
-    async addRole({ commit }, role) {
-      const id = await dbService.add("roles", role);
-      commit("ADD_ROLE", { ...role, id });
+    async addRole({ commit }, formData) {
+      console.log("Adding role:", formData);
+      try {
+        const response = await dbService.addWithImage("roles", formData);
+        console.log("Response from dbService:", response);
+        const newRole = {
+          id: response.id,
+          name: formData.get("name"),
+          description: formData.get("description"),
+          image: response.imageUrl,
+        };
+        console.log("New role object:", newRole);
+        commit("ADD_ROLE", newRole);
+      } catch (error) {
+        console.error("Error in addRole action:", error);
+        throw error;
+      }
     },
     async addPlayer({ commit }, player) {
       const id = await dbService.add("players", player);
@@ -85,17 +99,28 @@ export default createStore({
       const id = await dbService.add("games", game);
       commit("ADD_GAME", { ...game, id });
     },
-    async updateRole({ commit }, role) {
-      await dbService.update("roles", role);
-      commit("UPDATE_ROLE", role);
+    async updateRole({ commit }, formData) {
+      const response = await dbService.updateWithImage("roles", formData);
+      const updatedRole = {
+        id: formData.get("id"),
+        name: formData.get("name"),
+        description: formData.get("description"),
+        image: response.imageUrl || formData.get("image"),
+      };
+      commit("UPDATE_ROLE", updatedRole);
     },
     async updatePlayer({ commit }, player) {
       await dbService.update("players", player);
       commit("UPDATE_PLAYER", player);
     },
     async deleteRole({ commit }, roleId) {
-      await dbService.delete("roles", roleId);
-      commit("DELETE_ROLE", roleId);
+      try {
+        await dbService.delete("roles", roleId);
+        commit("DELETE_ROLE", roleId);
+      } catch (error) {
+        console.error("Error deleting role:", error);
+        throw error;
+      }
     },
     async deletePlayer({ commit }, playerId) {
       try {

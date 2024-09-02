@@ -75,13 +75,42 @@ export default class IndexedDBService {
 
   async delete(storeName, id) {
     return new Promise((resolve, reject) => {
-      const transaction = this.db.transaction(storeName, "readwrite");
-      const store = transaction.objectStore(storeName);
-      const request = store.delete(id);
+      const transaction = this.db.transaction([storeName], "readwrite");
+      const objectStore = transaction.objectStore(storeName);
+      const request = objectStore.delete(id);
 
-      request.onerror = (event) =>
-        reject("Error deleting item: " + event.target.error);
-      request.onsuccess = (event) => resolve(event.target.result);
+      request.onerror = (event) => {
+        reject("Error deleting data: " + event.target.error);
+      };
+
+      request.onsuccess = () => {
+        resolve();
+      };
+    });
+  }
+
+  async addWithImage(storeName, formData) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([storeName], "readwrite");
+      const objectStore = transaction.objectStore(storeName);
+
+      const data = {
+        name: formData.get("name"),
+        description: formData.get("description"),
+      };
+
+      const request = objectStore.add(data);
+
+      request.onerror = (event) => {
+        reject("Error adding data: " + event.target.error);
+      };
+
+      request.onsuccess = (event) => {
+        const id = event.target.result;
+        // Handle image upload here if needed
+        // For now, we'll just resolve with the id
+        resolve({ id, imageUrl: null });
+      };
     });
   }
 }

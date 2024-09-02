@@ -16,6 +16,15 @@
           required
         ></textarea>
       </div>
+      <div class="form-group">
+        <label for="roleImage">{{ $t("roleForm.image") }}</label>
+        <input
+          type="file"
+          id="roleImage"
+          @change="handleImageUpload"
+          accept="image/*"
+        />
+      </div>
       <button type="submit">
         {{ isEditing ? $t("roleForm.update") : $t("roleForm.add") }}
       </button>
@@ -40,12 +49,8 @@ export default {
   data() {
     return {
       role: this.editingRole
-        ? {
-            id: this.editingRole.id,
-            name: this.editingRole.name,
-            description: this.editingRole.description,
-          }
-        : { name: "", description: "" },
+        ? { ...this.editingRole }
+        : { name: "", description: "", image: null },
     };
   },
   computed: {
@@ -57,29 +62,31 @@ export default {
     ...mapActions(["addRole", "updateRole"]),
     async submitRole() {
       try {
-        // Create a sanitized copy of the role object
-        const roleSanitized = {
-          name: this.role.name,
-          description: this.role.description,
-        };
-
-        if (this.isEditing && this.role.id) {
-          roleSanitized.id = this.role.id;
+        const formData = new FormData();
+        formData.append("name", this.role.name);
+        formData.append("description", this.role.description);
+        if (this.role.image) {
+          formData.append("image", this.role.image);
         }
 
         if (this.isEditing) {
-          await this.updateRole(roleSanitized);
+          formData.append("id", this.role.id);
+          await this.updateRole(formData);
         } else {
-          await this.addRole(roleSanitized);
+          await this.addRole(formData);
         }
-        this.$emit("role-submitted", roleSanitized);
+        this.$emit("role-submitted", this.role);
         if (!this.isEditing) {
-          this.role = { name: "", description: "" };
+          this.role = { name: "", description: "", image: null };
         }
       } catch (error) {
         console.error("Error submitting role:", error);
-        // You might want to show an error message to the user here
+        // Show an error message to the user here
+        alert("Error adding role. Please try again.");
       }
+    },
+    handleImageUpload(event) {
+      this.role.image = event.target.files[0];
     },
   },
 };

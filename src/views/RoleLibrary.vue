@@ -3,26 +3,30 @@
     <h2 class="section-title">{{ $t("roleLibrary.title") }}</h2>
     <div class="role-container">
       <div class="role-list-container">
-        <RoleListComponent @role-selected="selectRole" />
-        <button @click="showAddForm = true" class="add-role-btn">
-          {{ $t("roleLibrary.addRole") }}
-        </button>
+        <RoleListComponent @select-role="selectRole" />
       </div>
       <div class="role-detail-container">
+        <RoleDetailComponent
+          v-if="selectedRole && !showAddForm"
+          :role="selectedRole"
+          @edit-role="editRole"
+          @delete-role="handleDeleteRole"
+        />
         <RoleFormComponent
           v-if="showAddForm || editingRole"
-          :editing-role="editingRole"
+          :editingRole="editingRole"
           @role-submitted="handleRoleSubmit"
           @cancel="cancelForm"
         />
-        <RoleDetailComponent
-          v-else-if="selectedRole"
-          :role="selectedRole"
-          @edit-role="editRole"
-          @delete-role="deleteRole"
-        />
       </div>
     </div>
+    <button
+      @click="showAddForm = true"
+      class="add-role-btn"
+      v-if="!showAddForm && !editingRole"
+    >
+      {{ $t("roleLibrary.addRole") }}
+    </button>
   </div>
 </template>
 
@@ -57,13 +61,13 @@ export default {
       this.showAddForm = false;
       this.editingRole = null;
       this.selectedRole = role;
+      // Force a re-render of the RoleListComponent
+      this.$nextTick(() => {
+        this.$forceUpdate();
+      });
     },
     editRole(role) {
       this.editingRole = role;
-    },
-    async deleteRole(roleId) {
-      await this.deleteRole(roleId);
-      this.selectedRole = null;
     },
     async handleDeleteRole(roleId) {
       try {
