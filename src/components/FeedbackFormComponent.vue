@@ -1,19 +1,19 @@
 <template>
   <form @submit.prevent="submitFeedback" class="feedback-form">
     <div class="form-group">
-      <label for="name">{{ $t("feedbackForm.name") }}</label>
+      <label for="name">{{ $t("about.feedbackForm.name") }}</label>
       <input type="text" id="name" v-model="name" required />
     </div>
     <div class="form-group">
-      <label for="email">{{ $t("feedbackForm.email") }}</label>
+      <label for="email">{{ $t("about.feedbackForm.email") }}</label>
       <input type="email" id="email" v-model="email" required />
     </div>
     <div class="form-group">
-      <label for="message">{{ $t("feedbackForm.message") }}</label>
+      <label for="message">{{ $t("about.feedbackForm.message") }}</label>
       <textarea id="message" v-model="message" required></textarea>
     </div>
     <button type="submit" class="btn btn-primary">
-      {{ $t("feedbackForm.submit") }}
+      {{ $t("about.feedbackForm.submit") }}
     </button>
   </form>
 </template>
@@ -40,7 +40,7 @@ export default {
       this.name = "";
       this.email = "";
       this.message = "";
-      alert(this.$t("feedbackForm.thankYou"));
+      alert(this.$t("about.feedbackForm.thankYou"));
     },
   },
 };
