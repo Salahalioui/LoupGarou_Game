@@ -1,6 +1,5 @@
 <template>
   <div class="game-management">
-    <h2 class="section-title">{{ $t("gameManagement.title") }}</h2>
     <div class="game-container">
       <GameSetupComponent
         v-if="gameState === 'setup'"

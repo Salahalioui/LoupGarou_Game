@@ -102,11 +102,28 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+#app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("@/assets/images/background.jpg") no-repeat center center
+    fixed;
+  background-size: cover;
+  opacity: 0.8; /* Adjust the opacity value as needed */
+  z-index: -1;
 }
 
 .app-header {
   background-color: $primary-color;
   color: white;
+  opacity: 0.9;
   padding: 1rem;
   text-align: center;
   position: sticky;
@@ -172,6 +189,7 @@ body {
 .app-footer {
   background-color: $text-color;
   color: white;
+  opacity: 0.9;
   text-align: center;
   padding: 1rem;
   margin-top: auto;
