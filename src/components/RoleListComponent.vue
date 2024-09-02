@@ -6,7 +6,7 @@
         v-for="role in allRoles"
         :key="role.id"
         class="role-card"
-        @click="selectRole(role)"
+        @click="showRolePopup(role)"
       >
         <img
           :src="role.image"
@@ -16,15 +16,30 @@
         <h4 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h4>
       </div>
     </div>
+    <RolePopup
+      v-if="isPopupVisible"
+      :role="selectedRole"
+      @close="isPopupVisible = false"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { getPredefinedRoles } from "@/data/predefinedRoles";
+import RolePopup from "@/components/RolePopup.vue";
 
 export default {
   name: "RoleListComponent",
+  components: {
+    RolePopup,
+  },
+  data() {
+    return {
+      isPopupVisible: false,
+      selectedRole: null,
+    };
+  },
   computed: {
     ...mapState(["roles"]),
     allRoles() {
@@ -33,8 +48,9 @@ export default {
     },
   },
   methods: {
-    selectRole(role) {
-      this.$emit("role-selected", role);
+    showRolePopup(role) {
+      this.selectedRole = role;
+      this.isPopupVisible = true;
     },
   },
 };
