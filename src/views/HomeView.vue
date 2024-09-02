@@ -8,17 +8,14 @@
       <div class="feature-card">
         <i class="fas fa-users feature-icon"></i>
         <h3>{{ $t("home.features.managePlayers") }}</h3>
-        <p>{{ $t("home.features.managePlayersDesc") }}</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-theater-masks feature-icon"></i>
         <h3>{{ $t("home.features.assignRoles") }}</h3>
-        <p>{{ $t("home.features.assignRolesDesc") }}</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-hourglass-half feature-icon"></i>
         <h3>{{ $t("home.features.gameFlow") }}</h3>
-        <p>{{ $t("home.features.gameFlowDesc") }}</p>
       </div>
     </div>
     <div class="cta-section">

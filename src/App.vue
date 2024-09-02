@@ -18,6 +18,10 @@
         <router-link to="/game" class="nav-link" @click="closeMenu">{{
           $t("app.nav.game")
         }}</router-link>
+        <router-link to="/about" class="nav-link" @click="closeMenu">{{
+          $t("app.nav.about")
+        }}</router-link>
+        <!-- New link -->
       </nav>
       <button @click="toggleDarkMode" class="dark-mode-toggle">
         {{ isDarkMode ? "☀️" : "🌙" }}

@@ -5,7 +5,8 @@
       "home": "Home",
       "roles": "Roles",
       "players": "Players",
-      "game": "Game"
+      "game": "Game",
+      "about": "About"
     }
   },
   "home": {
@@ -181,6 +182,19 @@
       "Day Discussion": "Day Discussion: All players discuss the events of the night and try to identify the Werewolves.",
       "Day Voting": "Day Voting: All players vote on who to eliminate.",
       "Execution": "Execution: The player with the most votes is eliminated. Special roles may activate."
+    }
+  },
+  "about": {
+    "title": "About Werewolf Moderator",
+    "guideTitle": "Guide",
+    "guideContent": "Here is a guide on how to use the Werewolf Moderator app...",
+    "feedbackTitle": "Feedback",
+    "feedbackForm": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Submit",
+      "thankYou": "Thank you for your feedback!"
     }
   }
 }

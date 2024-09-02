@@ -182,6 +182,19 @@
       "selectPlayers": "اختر اللاعبين",
       "selectRoles": "اختر الأدوار",
       "startGame": "ابدأ اللعبة"
+    },
+    "about": {
+      "title": "معلومات عن مشرف لعبة الذئب",
+    "guideTitle": "الدليل",
+    "guideContent": "هنا دليل كيفية استخدام تطبيق مشرف لعبة الذئب...",
+    "feedbackTitle": "الرأي",
+    "feedbackForm": {
+      "name": "الإسم",
+      "email": "البريد الإلكتروني",
+      "message": "الرسالة",
+      "submit": "إرسال",
+      "thankYou": "شكرا لرأيك!"
     }
+  }
   }
   
