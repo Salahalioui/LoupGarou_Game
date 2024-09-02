@@ -107,25 +107,28 @@ export default {
 .game-setup {
   display: flex;
   flex-direction: column;
-  gap: $spacing-large;
+  gap: $spacing-medium;
+  padding: $spacing-medium;
 }
 
 .setup-title {
-  font-size: $font-size-xlarge;
-  margin-bottom: $spacing-medium;
+  font-family: $font-family-heading;
+  font-size: $font-size-large;
   text-align: center;
   color: $moon-color;
+  margin-bottom: $spacing-medium;
 }
 
 .setup-section {
-  background-color: $wolf-color;
+  background-color: rgba($wolf-color, 0.8);
   border-radius: $border-radius;
-  padding: $spacing-large;
+  padding: $spacing-medium;
   box-shadow: $box-shadow;
 }
 
 .section-subtitle {
-  font-size: $font-size-large;
+  font-family: $font-family-heading;
+  font-size: $font-size-normal;
   margin-bottom: $spacing-medium;
   color: $accent-color;
 }
@@ -133,30 +136,33 @@ export default {
 .player-grid,
 .role-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: $spacing-medium;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: $spacing-small;
 }
 
 .player-item,
 .role-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: $spacing-small;
-  background-color: lighten($night-color, 5%);
+  background-color: rgba($night-color, 0.6);
   padding: $spacing-small;
   border-radius: $border-radius;
+  text-align: center;
 }
 
 .role-image {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
-  border-radius: $border-radius;
+  border-radius: 50%;
+  margin-bottom: $spacing-small;
 }
 
 .role-name {
-  flex: 1;
+  font-size: $font-size-small;
   color: $text-color;
+  margin-bottom: $spacing-small;
 }
 
 .role-counter {
@@ -167,7 +173,7 @@ export default {
   button {
     width: 30px;
     height: 30px;
-    font-size: $font-size-large;
+    font-size: $font-size-normal;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -179,7 +185,7 @@ export default {
     cursor: pointer;
 
     &:disabled {
-      background-color: lighten($night-color, 20%);
+      background-color: rgba($night-color, 0.4);
       cursor: not-allowed;
     }
   }
@@ -188,7 +194,7 @@ export default {
 .start-game-btn {
   width: 100%;
   padding: $spacing-medium;
-  font-size: $font-size-large;
+  font-size: $font-size-normal;
   background-color: $secondary-color;
   color: $text-color;
   border: none;
@@ -201,32 +207,52 @@ export default {
   }
 
   &:disabled {
-    background-color: lighten($night-color, 20%);
+    background-color: rgba($night-color, 0.4);
     cursor: not-allowed;
   }
 }
 
-// Dark mode styles
-:global(.dark-mode) {
-  .setup-section {
-    background-color: lighten($night-color, 5%);
-  }
-
-  .player-item,
-  .role-item {
-    background-color: $night-color;
-  }
-}
-
-// Responsive styles
+// Tablet and larger screens
 @media (min-width: $breakpoint-tablet) {
   .game-setup {
-    max-width: 800px;
-    margin: 0 auto;
+    padding: $spacing-large;
+    gap: $spacing-large;
   }
 
   .setup-title {
-    font-size: 1.8rem;
+    font-size: $font-size-xlarge;
+  }
+
+  .section-subtitle {
+    font-size: $font-size-large;
+  }
+
+  .player-grid,
+  .role-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: $spacing-medium;
+  }
+
+  .role-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .role-name {
+    font-size: $font-size-normal;
+  }
+}
+
+// Desktop screens
+@media (min-width: $breakpoint-desktop) {
+  .game-setup {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .player-grid,
+  .role-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 </style>
