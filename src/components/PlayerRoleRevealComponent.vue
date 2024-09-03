@@ -3,18 +3,6 @@
     <h3>{{ $t("playerRoleReveal.title") }}</h3>
     <div v-if="currentPlayer" class="player-card">
       <h4>{{ currentPlayer.name }}</h4>
-      <div class="role-info" :class="{ 'role-hidden': !isRevealed }">
-        <img
-          v-if="currentPlayer.role.image"
-          :src="currentPlayer.role.image"
-          :alt="$t(`roles.${currentPlayer.role.id}.name`)"
-          class="role-image"
-        />
-        <div v-else class="role-image placeholder-image">
-          {{ $t(`roles.${currentPlayer.role.id}.name`).charAt(0) }}
-        </div>
-        <p class="role-name">{{ $t(`roles.${currentPlayer.role.id}.name`) }}</p>
-      </div>
       <button @click="toggleReveal" class="reveal-button">
         {{
           isRevealed
@@ -23,6 +11,11 @@
         }}
       </button>
     </div>
+    <RolePopup
+      v-if="isRevealed && currentPlayer"
+      :role="currentPlayer.role"
+      @close="toggleReveal"
+    />
     <div class="navigation-buttons">
       <button @click="previousPlayer" :disabled="currentPlayerIndex === 0">
         &larr; {{ $t("playerRoleReveal.previous") }}
@@ -46,9 +39,13 @@
 <script>
 import { mapState } from "vuex";
 import { getPredefinedRoles } from "@/data/predefinedRoles";
+import RolePopup from "@/components/RolePopup.vue";
 
 export default {
   name: "PlayerRoleRevealComponent",
+  components: {
+    RolePopup,
+  },
   props: {
     gameSetup: {
       type: Object,
@@ -141,34 +138,6 @@ export default {
   border-radius: $border-radius;
   padding: $spacing-large;
   margin-bottom: $spacing-medium;
-}
-
-.role-info {
-  transition: opacity 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.role-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.role-image {
-  width: 80%;
-  height: auto;
-  max-height: 60vh;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
-
-.role-name {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
 }
 
 .reveal-button {

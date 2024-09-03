@@ -253,7 +253,10 @@
     "title": "Game Setup",
     "selectPlayers": "Select Players",
     "selectRoles": "Select Roles",
-    "startGame": "Start Game"
+    "startGame": "Start Game",
+    "selectAll": "Select All",
+    "hideRoles": "Hide Roles",
+    "showRoles": "Show Roles"
   },
   "playerRoleReveal": {
     "title": "Player Role Reveal",

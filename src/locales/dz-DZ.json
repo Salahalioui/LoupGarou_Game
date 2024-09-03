@@ -181,7 +181,10 @@
       "title": "إعداد اللعبة",
       "selectPlayers": "اختر اللاعبين",
       "selectRoles": "اختر الأدوار",
-      "startGame": "ابدأ اللعبة"
+      "startGame": "ابدأ اللعبة",
+      "selectAll": "اختر الكل",
+      "hideRoles": "إخفاء الأدوار",
+      "showRoles": "إظهار الأدوار"
     },
     "about": {
       "title": "معلومات عن مشرف لعبة الذئب",

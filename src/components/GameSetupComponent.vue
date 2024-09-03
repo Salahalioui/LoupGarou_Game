@@ -1,8 +1,18 @@
 <template>
   <div class="game-setup">
     <h3 class="setup-title">{{ $t("gameSetup.title") }}</h3>
+
     <div class="setup-section">
       <h4 class="section-subtitle">{{ $t("gameSetup.selectPlayers") }}</h4>
+      <div class="select-all">
+        <input
+          type="checkbox"
+          id="select-all-players"
+          v-model="selectAllPlayers"
+          @change="toggleAllPlayers"
+        />
+        <label for="select-all-players">{{ $t("gameSetup.selectAll") }}</label>
+      </div>
       <div class="player-grid">
         <div v-for="player in players" :key="player.id" class="player-item">
           <input
@@ -15,10 +25,16 @@
         </div>
       </div>
     </div>
+
     <div class="setup-section">
       <h4 class="section-subtitle">{{ $t("gameSetup.selectRoles") }}</h4>
-      <div class="role-grid">
-        <div v-for="role in allRoles" :key="role.id" class="role-item">
+      <button @click="toggleRoleList" class="toggle-roles-btn">
+        {{
+          showAllRoles ? $t("gameSetup.hideRoles") : $t("gameSetup.showRoles")
+        }}
+      </button>
+      <div class="role-grid" :class="{ 'show-all': showAllRoles }">
+        <div v-for="role in visibleRoles" :key="role.id" class="role-item">
           <img
             :src="role.image"
             :alt="$t(`roles.${role.id}.name`)"
@@ -43,6 +59,7 @@
         </div>
       </div>
     </div>
+
     <button @click="startGame" :disabled="!isValidSetup" class="start-game-btn">
       {{ $t("gameSetup.startGame") }}
     </button>
@@ -59,6 +76,8 @@ export default {
     return {
       selectedPlayers: [],
       roleCount: {},
+      showAllRoles: false,
+      selectAllPlayers: false,
     };
   },
   computed: {
@@ -77,6 +96,12 @@ export default {
         this.selectedPlayers.length > 0 &&
         this.totalRoles === this.selectedPlayers.length
       );
+    },
+    visibleRoles() {
+      if (this.showAllRoles) {
+        return this.allRoles;
+      }
+      return this.allRoles.filter((role) => this.roleCount[role.id] > 0);
     },
   },
   methods: {
@@ -97,6 +122,22 @@ export default {
         this.$emit("game-start", gameSetup);
       }
     },
+    toggleRoleList() {
+      this.showAllRoles = !this.showAllRoles;
+    },
+    toggleAllPlayers() {
+      if (this.selectAllPlayers) {
+        this.selectedPlayers = this.players.map((player) => player.id);
+      } else {
+        this.selectedPlayers = [];
+      }
+    },
+  },
+  watch: {
+    selectedPlayers() {
+      this.selectAllPlayers =
+        this.selectedPlayers.length === this.players.length;
+    },
   },
 };
 </script>
@@ -107,8 +148,7 @@ export default {
 .game-setup {
   display: flex;
   flex-direction: column;
-  gap: $spacing-medium;
-  padding: $spacing-medium;
+  gap: $spacing-small;
 }
 
 .setup-title {
@@ -116,47 +156,67 @@ export default {
   font-size: $font-size-large;
   text-align: center;
   color: $moon-color;
-  margin-bottom: $spacing-medium;
+  margin-bottom: $spacing-small;
 }
 
 .setup-section {
   background-color: rgba($wolf-color, 0.8);
   border-radius: $border-radius;
-  padding: $spacing-medium;
+  padding: $spacing-small;
   box-shadow: $box-shadow;
 }
 
 .section-subtitle {
   font-family: $font-family-heading;
   font-size: $font-size-normal;
-  margin-bottom: $spacing-medium;
+  margin-bottom: $spacing-small;
   color: $accent-color;
 }
 
-.player-grid,
-.role-grid {
+.select-all {
+  margin-bottom: $spacing-small;
+}
+
+.player-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: $spacing-small;
 }
 
-.player-item,
-.role-item {
+.player-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: rgba($night-color, 0.6);
   padding: $spacing-small;
   border-radius: $border-radius;
-  text-align: center;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: $spacing-small;
+  max-height: 300px;
+  overflow-y: auto;
+
+  &.show-all {
+    max-height: none;
+  }
+}
+
+.role-item {
+  background-color: rgba($wolf-color, 0.8);
+  border-radius: $border-radius;
+  padding: $spacing-small;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .role-image {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: $spacing-small;
 }
 
 .role-name {
@@ -171,9 +231,9 @@ export default {
   gap: $spacing-small;
 
   button {
-    width: 30px;
-    height: 30px;
-    font-size: $font-size-normal;
+    width: 24px;
+    height: 24px;
+    font-size: $font-size-small;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -191,68 +251,56 @@ export default {
   }
 }
 
-.start-game-btn {
-  width: 100%;
-  padding: $spacing-medium;
-  font-size: $font-size-normal;
+.toggle-roles-btn {
+  margin-bottom: $spacing-small;
+  padding: $spacing-small;
   background-color: $secondary-color;
   color: $text-color;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color $transition-speed ease;
+}
 
-  &:hover:not(:disabled) {
-    background-color: darken($secondary-color, 10%);
-  }
+.start-game-btn {
+  padding: $spacing-small;
+  font-size: $font-size-normal;
+  background-color: $primary-color;
+  color: $text-color;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
 
   &:disabled {
-    background-color: rgba($night-color, 0.4);
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }
 
-// Tablet and larger screens
 @media (min-width: $breakpoint-tablet) {
   .game-setup {
-    padding: $spacing-large;
-    gap: $spacing-large;
-  }
-
-  .setup-title {
-    font-size: $font-size-xlarge;
-  }
-
-  .section-subtitle {
-    font-size: $font-size-large;
-  }
-
-  .player-grid,
-  .role-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: $spacing-medium;
   }
 
-  .role-image {
-    width: 80px;
-    height: 80px;
+  .setup-section {
+    padding: $spacing-medium;
   }
 
-  .role-name {
-    font-size: $font-size-normal;
-  }
-}
-
-// Desktop screens
-@media (min-width: $breakpoint-desktop) {
-  .game-setup {
-    max-width: 1200px;
-    margin: 0 auto;
+  .player-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 
-  .player-grid,
   .role-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .role-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .start-game-btn {
+    padding: $spacing-medium;
+    font-size: $font-size-large;
   }
 }
 </style>

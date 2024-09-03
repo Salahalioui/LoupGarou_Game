@@ -66,31 +66,29 @@ export default {
 .game-management {
   max-width: 100%;
   margin: 0 auto;
-  padding: $spacing-large;
+  padding: $spacing-medium;
   color: $text-color;
-}
-
-.section-title {
-  font-size: $font-size-xlarge;
-  margin-bottom: $spacing-large;
-  text-align: center;
-  color: $moon-color;
 }
 
 .game-container {
   background-color: $night-color;
   border-radius: $border-radius;
-  padding: $spacing-large;
+  padding: $spacing-medium;
   box-shadow: $box-shadow;
   display: flex;
   flex-direction: column;
-  gap: $spacing-large;
+  gap: $spacing-medium;
 }
 
-// Responsive styles
 @media (min-width: $breakpoint-tablet) {
   .game-management {
     max-width: 800px;
+    padding: $spacing-large;
+  }
+
+  .game-container {
+    padding: $spacing-large;
+    gap: $spacing-large;
   }
 }
 </style>
