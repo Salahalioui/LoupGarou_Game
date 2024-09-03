@@ -1,41 +1,47 @@
 <template>
   <div id="app" :class="{ 'dark-mode': isDarkMode, rtl: isRTL }">
     <header class="app-header">
-      <h1 class="app-title">{{ $t("app.title") }}</h1>
-      <button @click="toggleMenu" class="menu-toggle">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav class="app-nav" :class="{ 'nav-open': isMenuOpen }">
-        <router-link to="/" class="nav-link" @click="closeMenu">{{
-          $t("app.nav.home")
-        }}</router-link>
-        <router-link to="/roles" class="nav-link" @click="closeMenu">{{
-          $t("app.nav.roles")
-        }}</router-link>
-        <router-link to="/players" class="nav-link" @click="closeMenu">{{
-          $t("app.nav.players")
-        }}</router-link>
-        <router-link to="/game" class="nav-link" @click="closeMenu">{{
-          $t("app.nav.game")
-        }}</router-link>
-        <router-link to="/about" class="nav-link" @click="closeMenu">{{
-          $t("app.nav.about")
-        }}</router-link>
-        <!-- New link -->
-      </nav>
-      <button @click="toggleDarkMode" class="dark-mode-toggle">
-        {{ isDarkMode ? "☀️" : "🌙" }}
-      </button>
-      <select
-        v-model="$i18n.locale"
-        @change="updateDirection"
-        class="language-select"
-      >
-        <option value="en">English</option>
-        <option value="ar-DZ">العربية (الجزائر)</option>
-        <option value="dz-DZ">الدارجة</option>
-      </select>
+      <div class="header-content">
+        <h1 class="app-title">{{ $t("app.title") }}</h1>
+        <div class="header-controls">
+          <button
+            @click="toggleDarkMode"
+            class="icon-btn dark-mode-toggle"
+            :title="isDarkMode ? 'Light Mode' : 'Dark Mode'"
+          >
+            {{ isDarkMode ? "☀️" : "🌙" }}
+          </button>
+          <select
+            v-model="$i18n.locale"
+            @change="updateDirection"
+            class="language-select"
+          >
+            <option value="en">English</option>
+            <option value="ar-DZ">العربية (الجزائر)</option>
+            <option value="dz-DZ">الدارجة</option>
+          </select>
+          <button
+            @click="toggleMenu"
+            class="icon-btn menu-toggle"
+            :aria-expanded="isMenuOpen"
+          >
+            <span class="sr-only">Toggle Menu</span>
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
     </header>
+    <nav class="app-nav" :class="{ 'nav-open': isMenuOpen }">
+      <router-link
+        v-for="(link, index) in navLinks"
+        :key="index"
+        :to="link.to"
+        class="nav-link"
+        @click="closeMenu"
+      >
+        {{ $t(link.text) }}
+      </router-link>
+    </nav>
     <main class="app-main">
       <router-view></router-view>
     </main>
@@ -52,11 +58,17 @@ export default {
     return {
       isDarkMode: false,
       isMenuOpen: false,
-      isRTL: false,
+      // Remove isRTL from here
+      navLinks: [
+        { to: "/", text: "app.nav.home" },
+        { to: "/roles", text: "app.nav.roles" },
+        { to: "/players", text: "app.nav.players" },
+        { to: "/game", text: "app.nav.game" },
+        { to: "/about", text: "app.nav.about" },
+      ],
     };
   },
   computed: {
-    // eslint-disable-next-line vue/no-dupe-keys
     isRTL() {
       return this.$i18n.locale === "ar-DZ" || this.$i18n.locale === "dz-DZ";
     },
@@ -95,8 +107,8 @@ export default {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  font-size: $font-size-normal;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
   line-height: 1.5;
   color: $text-color;
   background-color: $background-color;
@@ -106,63 +118,68 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-
-#app::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("@/assets/images/background.jpg") no-repeat center center
-    fixed;
-  background-size: cover;
-  opacity: 0.6;
-  z-index: -1;
 }
 
 .app-header {
-  background-color: rgba($night-color, 0.9);
+  background-color: $night-color;
   color: $moon-color;
-  padding: $spacing-medium;
-  text-align: center;
+  padding: $spacing-sm;
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  max-width: $max-width;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .app-title {
-  font-size: $font-size-xlarge;
+  font-size: $font-size-lg;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.menu-toggle {
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.icon-btn {
   background: none;
   border: none;
   color: $moon-color;
-  font-size: $font-size-large;
+  font-size: $font-size-base;
   cursor: pointer;
+  padding: $spacing-xs;
+}
+
+.language-select {
+  padding: $spacing-xs;
+  background-color: rgba($wolf-color, 0.3);
+  border: 1px solid $accent-color;
+  border-radius: $border-radius;
+  color: $moon-color;
+  font-size: $font-size-sm;
 }
 
 .app-nav {
+  background-color: rgba($night-color, 0.95);
   position: fixed;
   top: 60px;
   left: -100%;
   width: 100%;
   height: calc(100vh - 60px);
-  background-color: rgba($night-color, 0.95);
-  transition: left $transition-speed ease;
+  transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
-  padding: $spacing-medium;
+  padding: $spacing-md;
+  z-index: 999;
 
   &.nav-open {
     left: 0;
@@ -172,10 +189,10 @@ body {
 .nav-link {
   color: $moon-color;
   text-decoration: none;
-  padding: $spacing-small $spacing-medium;
-  margin: $spacing-small 0;
+  padding: $spacing-sm;
+  margin-bottom: $spacing-sm;
   border-radius: $border-radius;
-  transition: background-color $transition-speed ease;
+  transition: background-color 0.2s ease;
 
   &:hover,
   &.router-link-active {
@@ -185,35 +202,18 @@ body {
 
 .app-main {
   flex-grow: 1;
-  padding: $spacing-large;
-  max-width: 100%;
+  padding: $spacing-md;
+  max-width: $max-width;
   margin: 0 auto;
   width: 100%;
 }
 
 .app-footer {
-  background-color: rgba($night-color, 0.9);
+  background-color: $night-color;
   color: $moon-color;
   text-align: center;
-  padding: $spacing-medium;
+  padding: $spacing-sm;
   margin-top: auto;
-}
-
-.dark-mode-toggle {
-  background: none;
-  border: none;
-  color: $moon-color;
-  font-size: $font-size-large;
-  cursor: pointer;
-}
-
-.language-select {
-  margin-left: $spacing-medium;
-  padding: $spacing-small;
-  background-color: rgba($wolf-color, 0.3);
-  border: 1px solid $accent-color;
-  border-radius: $border-radius;
-  color: $moon-color;
 }
 
 // Dark mode styles
@@ -221,12 +221,9 @@ body {
   background-color: darken($background-color, 10%);
   color: $moon-color;
 
-  .app-header {
-    background-color: rgba(darken($night-color, 5%), 0.9);
-  }
-
+  .app-header,
   .app-footer {
-    background-color: rgba(darken($night-color, 5%), 0.9);
+    background-color: darken($night-color, 5%);
   }
 
   .nav-link {
@@ -242,7 +239,11 @@ body {
   direction: rtl;
   text-align: right;
 
-  .app-header {
+  .header-content {
+    flex-direction: row-reverse;
+  }
+
+  .header-controls {
     flex-direction: row-reverse;
   }
 
@@ -255,88 +256,57 @@ body {
       right: 0;
     }
   }
-
-  .language-select {
-    margin-left: 0;
-    margin-right: $spacing-medium;
-  }
 }
 
 // Responsive styles
-@media (min-width: $breakpoint-tablet) {
-  .app-title {
-    font-size: 2rem;
+@media (min-width: $breakpoint-sm) {
+  .app-header {
+    padding: $spacing-md;
   }
 
-  .menu-toggle {
-    display: none;
+  .app-title {
+    font-size: $font-size-xl;
   }
 
   .app-nav {
     position: static;
     height: auto;
     flex-direction: row;
-    padding: 0;
-    background-color: transparent;
+    justify-content: center;
+    padding: $spacing-sm;
+    background-color: darken($night-color, 5%);
+
+    &.nav-open {
+      left: auto;
+      right: auto;
+    }
   }
 
   .nav-link {
-    margin: 0 $spacing-small;
+    margin-bottom: 0;
+    margin-right: $spacing-sm;
   }
 
+  .menu-toggle {
+    display: none;
+  }
+}
+
+@media (min-width: $breakpoint-md) {
   .app-main {
-    max-width: 800px;
-    padding: $spacing-large;
+    padding: $spacing-lg;
   }
 }
 
-// Common component styles
-.card {
-  background-color: rgba($wolf-color, 0.8);
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  padding: $spacing-medium;
-  margin-bottom: $spacing-medium;
-}
-
-.btn {
-  display: inline-block;
-  padding: $spacing-small $spacing-medium;
-  background-color: $primary-color;
-  color: $moon-color;
-  border: none;
-  border-radius: $border-radius;
-  cursor: pointer;
-  transition: background-color $transition-speed ease;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-
-  &:disabled {
-    background-color: lighten($night-color, 20%);
-    cursor: not-allowed;
-  }
-}
-
-.form-group {
-  margin-bottom: $spacing-medium;
-
-  label {
-    display: block;
-    margin-bottom: $spacing-small;
-  }
-
-  input,
-  textarea,
-  select {
-    width: 100%;
-    padding: $spacing-small;
-    border: 1px solid $accent-color;
-    border-radius: $border-radius;
-    font-size: $font-size-normal;
-    background-color: rgba($night-color, 0.3);
-    color: $moon-color;
-  }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 </style>

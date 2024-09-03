@@ -1,15 +1,51 @@
 <template>
-  <div class="role-popup">
-    <div class="popup-content">
-      <button class="close-button" @click="$emit('close')">&times;</button>
-      <img :src="role.image" :alt="role.name" class="role-image" />
-      <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
-      <p class="role-description">{{ $t(`roles.${role.id}.description`) }}</p>
+  <div class="role-popup" @click.self="$emit('close')">
+    <div class="role-card">
+      <div class="card-front" :class="{ flip: showBack }">
+        <div class="card-content">
+          <div class="card-frame">
+            <img
+              :src="role.image"
+              :alt="$t(`roles.${role.id}.name`)"
+              class="role-image"
+            />
+          </div>
+          <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
+          <div class="role-type">{{ $t(`roles.${role.id}.type`) }}</div>
+        </div>
+        <button class="flip-button" @click="showBack = true">
+          <i class="fas fa-redo"></i>
+        </button>
+      </div>
+      <div class="card-back" :class="{ flip: showBack }">
+        <div class="card-content">
+          <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
+          <p class="role-description">
+            {{ $t(`roles.${role.id}.description`) }}
+          </p>
+          <div class="role-abilities">
+            <h4>{{ $t("rolePopup.abilities") }}</h4>
+            <ul v-if="roleAbilities && roleAbilities.length">
+              <li v-for="(ability, index) in roleAbilities" :key="index">
+                {{ ability }}
+              </li>
+            </ul>
+            <p v-else>{{ $t("rolePopup.noAbilities") }}</p>
+          </div>
+        </div>
+        <button class="flip-button" @click="showBack = false">
+          <i class="fas fa-undo"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import enLocale from "@/locales/en.json";
+import arDZLocale from "@/locales/ar-DZ.json";
+import dzDZLocale from "@/locales/dz-DZ.json";
+
 export default {
   name: "RolePopup",
   props: {
@@ -17,6 +53,34 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    roleAbilities() {
+      const abilities = this.getAbilitiesFromLocale(this.role.id);
+      console.log("Computed abilities:", abilities);
+      return abilities;
+    },
+  },
+  methods: {
+    getAbilitiesFromLocale(roleId) {
+      const locales = {
+        en: enLocale,
+        "ar-DZ": arDZLocale,
+        "dz-DZ": dzDZLocale,
+      };
+      const currentLocale = this.$i18n.locale;
+      return locales[currentLocale]?.roles[roleId]?.abilities || [];
+    },
+  },
+  mounted() {
+    console.log("Role:", this.role);
+    console.log("Raw abilities:", this.getAbilitiesFromLocale(this.role.id));
+    console.log("Computed abilities:", this.roleAbilities);
+  },
+  data() {
+    return {
+      showBack: false,
+    };
   },
 };
 </script>
@@ -37,67 +101,129 @@ export default {
   z-index: 1000;
 }
 
-.popup-content {
-  background: $wolf-color;
-  padding: $spacing-large;
-  border-radius: $border-radius;
-  text-align: center;
-  max-width: 90%;
-  max-height: 90%;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: $box-shadow;
+.role-card {
+  width: 300px;
+  height: 450px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
-.close-button {
+.card-front,
+.card-back {
   position: absolute;
-  top: $spacing-small;
-  right: $spacing-small;
-  background: none;
-  border: none;
-  font-size: $font-size-xlarge;
-  color: $text-color;
-  cursor: pointer;
-  transition: color $transition-speed ease;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: $border-radius * 2;
+  box-shadow: 0 0 20px rgba($accent-color, 0.5);
+  overflow: hidden;
+}
 
-  &:hover {
-    color: $blood-color;
+.card-front {
+  background: linear-gradient(135deg, $wolf-color, $night-color);
+
+  &.flip {
+    transform: rotateY(180deg);
   }
+}
+
+.card-back {
+  background: linear-gradient(135deg, $night-color, $wolf-color);
+  transform: rotateY(180deg);
+
+  &.flip {
+    transform: rotateY(0deg);
+  }
+}
+
+.card-content {
+  padding: $spacing-medium;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-frame {
+  border: 4px solid $accent-color;
+  border-radius: $border-radius;
+  padding: $spacing-small;
+  margin-bottom: $spacing-medium;
 }
 
 .role-image {
   width: 100%;
-  height: auto;
-  max-height: 70vh;
-  object-fit: contain;
-  margin-bottom: $spacing-medium;
+  height: 200px;
+  object-fit: cover;
   border-radius: $border-radius;
 }
 
 .role-name {
+  font-family: $font-family-heading;
   font-size: $font-size-xlarge;
-  margin-bottom: $spacing-medium;
   color: $moon-color;
+  text-align: center;
+  margin-bottom: $spacing-small;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.role-type {
+  font-size: $font-size-small;
+  color: $accent-color;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .role-description {
   font-size: $font-size-normal;
   color: $text-color;
-  line-height: 1.6;
+  margin-bottom: $spacing-medium;
+  line-height: 1.4;
 }
 
-// Dark mode styles
-:global(.dark-mode) {
-  .popup-content {
-    background: lighten($night-color, 5%);
+.role-abilities {
+  h4 {
+    font-family: $font-family-heading;
+    font-size: $font-size-large;
+    color: $accent-color;
+    margin-bottom: $spacing-small;
   }
 
-  .close-button {
-    color: $moon-color;
+  ul {
+    list-style-type: none;
+    padding-left: $spacing-medium;
 
-    &:hover {
-      color: $blood-color;
+    li {
+      color: $text-color;
+      margin-bottom: $spacing-small;
+      position: relative;
+
+      &::before {
+        content: "•";
+        color: $accent-color;
+        position: absolute;
+        left: -$spacing-medium;
+      }
     }
+  }
+}
+
+.flip-button {
+  position: absolute;
+  bottom: $spacing-small;
+  right: $spacing-small;
+  background: none;
+  border: none;
+  color: $accent-color;
+  font-size: $font-size-large;
+  cursor: pointer;
+  transition: transform $transition-speed ease;
+
+  &:hover {
+    transform: scale(1.2);
   }
 }
 </style>

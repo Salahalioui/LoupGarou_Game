@@ -1,5 +1,5 @@
 <template>
-  <div v-if="role" class="role-detail">
+  <div class="role-detail">
     <img
       :src="role.image"
       :alt="$t(`roles.${role.id}.name`)"
@@ -8,10 +8,10 @@
     <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
     <p class="role-description">{{ $t(`roles.${role.id}.description`) }}</p>
     <div class="role-actions">
-      <button @click="editRole" class="edit-btn">
+      <button @click="$emit('edit-role', role)" class="edit-btn">
         {{ $t("roleDetail.edit") }}
       </button>
-      <button @click="deleteRole" class="delete-btn">
+      <button @click="confirmDelete" class="delete-btn">
         {{ $t("roleDetail.delete") }}
       </button>
     </div>
@@ -28,10 +28,7 @@ export default {
     },
   },
   methods: {
-    editRole() {
-      this.$emit("edit-role", this.role);
-    },
-    deleteRole() {
+    confirmDelete() {
       if (
         confirm(
           this.$t("roleDetail.confirmDelete", {
@@ -50,31 +47,34 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .role-detail {
-  background-color: $wolf-color;
+  background-color: rgba($wolf-color, 0.8);
   border-radius: $border-radius;
   padding: $spacing-large;
-  margin-bottom: $spacing-medium;
   text-align: center;
   box-shadow: $box-shadow;
 }
 
 .role-image {
-  width: 100%;
-  max-width: 200px;
-  height: auto;
-  border-radius: $border-radius;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
   margin-bottom: $spacing-medium;
+  border: 3px solid $accent-color;
 }
 
 .role-name {
+  font-family: $font-family-heading;
   font-size: $font-size-xlarge;
-  margin-bottom: $spacing-small;
   color: $moon-color;
+  margin-bottom: $spacing-small;
 }
 
 .role-description {
-  margin-bottom: $spacing-medium;
+  font-size: $font-size-normal;
   color: $text-color;
+  margin-bottom: $spacing-large;
+  line-height: 1.6;
 }
 
 .role-actions {
@@ -90,31 +90,27 @@ export default {
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color $transition-speed ease;
+  transition: background-color $transition-speed ease,
+    transform $transition-speed ease;
 }
 
 .edit-btn {
   background-color: $primary-color;
-  color: $text-color;
+  color: $moon-color;
 
   &:hover {
     background-color: darken($primary-color, 10%);
+    transform: translateY(-2px);
   }
 }
 
 .delete-btn {
   background-color: $blood-color;
-  color: $text-color;
+  color: $moon-color;
 
   &:hover {
     background-color: darken($blood-color, 10%);
-  }
-}
-
-// Dark mode styles
-:global(.dark-mode) {
-  .role-detail {
-    background-color: lighten($night-color, 10%);
+    transform: translateY(-2px);
   }
 }
 </style>

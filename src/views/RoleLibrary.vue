@@ -61,7 +61,6 @@ export default {
       this.showAddForm = false;
       this.editingRole = null;
       this.selectedRole = role;
-      // Force a re-render of the RoleListComponent
       this.$nextTick(() => {
         this.$forceUpdate();
       });
@@ -75,8 +74,11 @@ export default {
         this.selectedRole = null;
       } catch (error) {
         console.error("Error deleting role:", error);
-        // Handle the error (e.g., show an error message to the user)
       }
+    },
+    cancelForm() {
+      this.showAddForm = false;
+      this.editingRole = null;
     },
   },
 };
@@ -86,23 +88,29 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .role-library {
-  max-width: 100%;
+  max-width: $max-width;
   margin: 0 auto;
   padding: $spacing-large;
   color: $text-color;
 }
 
 .section-title {
-  color: $moon-color;
+  font-family: $font-family-heading;
   font-size: $font-size-xlarge;
+  color: $moon-color;
   margin-bottom: $spacing-large;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .role-container {
   display: flex;
   flex-direction: column;
   gap: $spacing-large;
+  background-color: rgba($night-color, 0.8);
+  border-radius: $border-radius;
+  padding: $spacing-large;
+  box-shadow: $box-shadow;
 }
 
 .role-list-container,
@@ -116,23 +124,20 @@ export default {
   padding: $spacing-medium;
   font-size: $font-size-normal;
   background-color: $secondary-color;
-  color: $text-color;
+  color: $moon-color;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: background-color $transition-speed ease;
+  transition: background-color $transition-speed ease,
+    transform $transition-speed ease;
 
   &:hover {
     background-color: darken($secondary-color, 10%);
+    transform: translateY(-2px);
   }
 }
 
-// Responsive styles
 @media (min-width: $breakpoint-tablet) {
-  .role-library {
-    max-width: 800px;
-  }
-
   .role-container {
     flex-direction: row;
   }
@@ -143,7 +148,7 @@ export default {
   }
 
   .role-detail-container {
-    flex: 1;
+    flex: 2;
   }
 }
 </style>

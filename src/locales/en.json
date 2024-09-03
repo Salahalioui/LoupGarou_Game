@@ -14,8 +14,11 @@
     "subtitle": "Manage your Werewolf games with ease!",
     "features": {
       "managePlayers": "Manage Players",
+      "managePlayersDesc": "Easily add, edit, and organize players for your games.",
       "assignRoles": "Assign Roles",
-      "gameFlow": "Game Flow"
+      "assignRolesDesc": "Randomly assign roles or customize them for each player.",
+      "gameFlow": "Game Flow",
+      "gameFlowDesc": "Guide the game through each phase with built-in timers and prompts."
     },
     "startGame": "Start a New Game"
   },
@@ -66,83 +69,184 @@
   "roles": {
     "werewolf": {
       "name": "Werewolf",
-      "description": "A villager-eating werewolf"
+      "description": "A villager-eating werewolf",
+      "type": "Evil",
+      "abilities": [
+        "Transform at night",
+        "Vote to eliminate a villager each night",
+        "Immune to the Seer's revelations"
+      ]
     },
     "villager": {
       "name": "Villager",
-      "description": "A regular villager"
+      "description": "A regular villager",
+      "type": "Good",
+      "abilities": [
+        "Vote during the day to eliminate suspected werewolves",
+        "Discuss and deduce werewolves' identities"
+      ]
     },
     "seer": {
       "name": "Seer",
-      "description": "Can see the true identity of one player each night"
+      "description": "Can see the true identity of one player each night",
+      "type": "Good",
+      "abilities": [
+        "Reveal the true identity of one player each night",
+        "Share information to help villagers"
+      ]
     },
     "town_guard": {
       "name": "Town Guard",
-      "description": "Protects a player each night from being eliminated."
+      "description": "Protects a player each night from being eliminated.",
+      "type": "Good",
+      "abilities": [
+        "Choose one player to protect each night",
+        "Cannot protect the same player two nights in a row"
+      ]
     },
     "hunter": {
       "name": "Hunter",
-      "description": "Can eliminate one player when they are eliminated"
+      "description": "Can eliminate one player when they are eliminated",
+      "type": "Good",
+      "abilities": [
+        "When eliminated, can choose one player to eliminate as well",
+        "This ability works even if eliminated by werewolves"
+      ]
     },
     "witch": {
       "name": "Witch",
-      "description": "Has a poison and a potion that can be used to save a player or eliminate a player"
+      "description": "Has a poison and a potion that can be used to save a player or eliminate a player",
+      "type": "Good",
+      "abilities": [
+        "Use a healing potion to save a player (once per game)",
+        "Use a poison to eliminate a player (once per game)"
+      ]
     },
     "priest": {
       "name": "The Priest",
-      "description": "He can spray a player with holy water. If that player is a werewolf, he will be eliminated"
+      "description": "He can spray a player with holy water. If that player is a werewolf, he will be eliminated",
+      "type": "Good",
+      "abilities": [
+        "Spray a player with holy water each night",
+        "Eliminate a werewolf if sprayed"
+      ]
     },
     "detective": {
       "name": "The Detective",
-      "description": "Can investigate two players each night to see if they are on the same team"
+      "description": "Can investigate two players each night to see if they are on the same team",
+      "type": "Good",
+      "abilities": [
+        "Investigate two players each night",
+        "Determine if the investigated players are on the same team"
+      ]
     },
     "thief": {
       "name": "The Thief",
-      "description": "Can switch his identity with another player once during the game"
+      "description": "Can switch his identity with another player once during the game",
+      "type": "Neutral",
+      "abilities": [
+        "Switch identity with another player once per game",
+        "Assume the role and team of the switched player"
+      ]
     },
     "judge": {
       "name": "The Judge",
-      "description": "Can invoke the voting of the players once during the game, the player who is voted out will not be eliminated"
+      "description": "Can invoke the voting of the players once during the game, the player who is voted out will not be eliminated",
+      "type": "Good",
+      "abilities": [
+        "Invoke a special voting round once per game",
+        "The voted player is not eliminated in this special round"
+      ]
     },
     "crow": {
       "name": "The Crow",
-      "description": "He chooses a player, during the voting that player will hold two votes"
+      "description": "He chooses a player, during the voting that player will hold two votes",
+      "type": "Good",
+      "abilities": [
+        "Choose a player to have two votes during the day voting",
+        "Can change the chosen player each night"
+      ]
     },
     "elder": {
       "name": "The Elder",
-      "description": "If eliminated by the villagers, the villagers' actions will be cancelled"
+      "description": "If eliminated by the villagers, the villagers' actions will be cancelled",
+      "type": "Good",
+      "abilities": [
+        "Cancel villagers' actions if eliminated by them",
+        "Appear as a regular villager to the Seer"
+      ]
     },
     "patient": {
       "name": "The Patient",
-      "description": "If eliminated by the werewolves, the werewolves will lose their night actions. If the villagers voted him out, the werewolves will kill twice"
+      "description": "If eliminated by the werewolves, the werewolves will lose their night actions. If the villagers voted him out, the werewolves will kill twice",
+      "type": "Good",
+      "abilities": [
+        "Cause werewolves to lose night actions if eliminated by them",
+        "Cause werewolves to kill twice if eliminated by villagers"
+      ]
     },
     "scapegoat": {
       "name": "Scapegoat",
-      "description": "He can choose to be eliminated instead of another player"
+      "description": "He can choose to be eliminated instead of another player",
+      "type": "Good",
+      "abilities": [
+        "Choose to be eliminated instead of another player",
+        "Can use this ability once per game"
+      ]
     },
     "bigBadWolf": {
       "name": "The Big Bad Wolf",
-      "description": "He is the werewolf leader, he can choose to eliminate one player each night, and can choose to change a werewolf with a villager (the werewolf will be eliminated)"
+      "description": "He is the werewolf leader, he can choose to eliminate one player each night, and can choose to change a werewolf with a villager (the werewolf will be eliminated)",
+      "type": "Evil",
+      "abilities": [
+        "Eliminate one player each night",
+        "Can swap a werewolf with a villager, eliminating the werewolf"
+      ]
     },
     "wolfCub": {
       "name": "The Wolf Cub",
-      "description": "When eliminated by the villagers, the werewolves will kill one more player"
+      "description": "When eliminated by the villagers, the werewolves will kill one more player",
+      "type": "Evil",
+      "abilities": [
+        "Appear as a regular werewolf",
+        "When eliminated by villagers, werewolves kill an extra player"
+      ]
     },
     "seerWerewolf": {
       "name": "The Seer Werewolf",
-      "description": "He can reveal the true identity of one player once per game"
+      "description": "He can reveal the true identity of one player once per game",
+      "type": "Evil",
+      "abilities": [
+        "Act as a regular werewolf",
+        "Reveal the true identity of one player once per game"
+      ]
     },
     "whiteWerewolf": {
       "name": "The White Werewolf",
-      "description": "Lone wolf, he can kill a werewolf each two nights, he only wins if he is the only werewolf surviving"
+      "description": "Lone wolf, he can kill a werewolf each two nights, he only wins if he is the only werewolf surviving",
+      "type": "Evil",
+      "abilities": [
+        "Kill a werewolf every two nights",
+        "Win condition: be the only surviving werewolf"
+      ]
     },
     "drunk": {
       "name": "The Drunk",
-      "description": "Loner Role, when he is eliminated by the villagers, he alone will win the game"
+      "description": "Loner Role, when he is eliminated by the villagers, he alone will win the game",
+      "type": "Neutral",
+      "abilities": [
+        "Win the game if eliminated by villagers",
+        "Appear as a regular villager to others"
+      ]
     },
     "cupid": {
       "name": "Cupid",
-      "description": "In the first night he can choose two players to fall in love, if one of those players is eliminated the other player will be eliminated too, Cupid will only win when the two players are the only ones surviving"
+      "description": "In the first night he can choose two players to fall in love, if one of those players is eliminated the other player will be eliminated too, Cupid will only win when the two players are the only ones surviving",
+      "type": "Neutral",
+      "abilities": [
+        "Choose two players to fall in love on the first night",
+        "Win if the two lovers are the only survivors"
+      ]
     }
   },
   "gameSetup": {

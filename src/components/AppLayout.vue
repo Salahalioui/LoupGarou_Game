@@ -1,21 +1,49 @@
 <template>
-  <div class="app-layout">
+  <div class="app-layout" :class="{ 'dark-mode': isDarkMode }">
     <header class="app-header">
-      <h1 class="app-title">Werewolf Moderator</h1>
-      <nav class="app-nav">
-        <ul class="nav-list">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/roles">Roles</router-link></li>
-          <li><router-link to="/players">Players</router-link></li>
-          <li><router-link to="/game">Game</router-link></li>
-        </ul>
-      </nav>
+      <div class="header-content">
+        <h1 class="app-title">{{ $t("app.title") }}</h1>
+        <nav class="app-nav">
+          <button
+            class="menu-toggle"
+            @click="toggleMenu"
+            aria-label="Toggle menu"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-list" :class="{ 'nav-open': isMenuOpen }">
+            <li v-for="(link, index) in navLinks" :key="index">
+              <router-link :to="link.to" @click="closeMenu">{{
+                $t(link.text)
+              }}</router-link>
+            </li>
+          </ul>
+        </nav>
+        <div class="header-controls">
+          <button
+            class="dark-mode-toggle"
+            @click="toggleDarkMode"
+            aria-label="Toggle dark mode"
+          >
+            <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+          </button>
+          <select v-model="$i18n.locale" class="language-select">
+            <option value="en">English</option>
+            <option value="ar-DZ">العربية</option>
+            <option value="dz-DZ">Tamazight</option>
+          </select>
+        </div>
+      </div>
     </header>
     <main class="app-main">
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
     <footer class="app-footer">
-      <p>&copy; 2024 Werewolf Moderator</p>
+      <p>&copy; {{ new Date().getFullYear() }} {{ $t("app.title") }}</p>
     </footer>
   </div>
 </template>
@@ -23,6 +51,34 @@
 <script>
 export default {
   name: "AppLayout",
+  data() {
+    return {
+      isDarkMode: false,
+      isMenuOpen: false,
+      navLinks: [
+        { to: "/", text: "app.nav.home" },
+        { to: "/roles", text: "app.nav.roles" },
+        { to: "/players", text: "app.nav.players" },
+        { to: "/game", text: "app.nav.game" },
+        { to: "/about", text: "app.nav.about" },
+      ],
+    };
+  },
+  methods: {
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode;
+      localStorage.setItem("darkMode", this.isDarkMode);
+    },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
+    },
+  },
+  mounted() {
+    this.isDarkMode = localStorage.getItem("darkMode") === "true";
+  },
 };
 </script>
 
@@ -35,115 +91,157 @@ export default {
   min-height: 100vh;
   background-color: $background-color;
   color: $text-color;
+  transition: background-color $transition-speed ease,
+    color $transition-speed ease;
 }
 
 .app-header {
   background-color: $night-color;
-  color: $moon-color;
   padding: $spacing-medium;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: $box-shadow;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: $max-width;
+  margin: 0 auto;
 }
 
 .app-title {
+  font-family: $font-family-heading;
   font-size: $font-size-xlarge;
-  margin-bottom: $spacing-small;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: $moon-color;
+  margin: 0;
 }
 
 .app-nav {
-  margin-top: $spacing-medium;
+  display: flex;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: $moon-color;
+  font-size: $font-size-large;
+  cursor: pointer;
 }
 
 .nav-list {
-  list-style-type: none;
-  padding: 0;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
   li {
-    margin: 0 $spacing-small;
+    margin-left: $spacing-medium;
   }
 
   a {
-    color: $text-color;
+    color: $moon-color;
     text-decoration: none;
-    padding: $spacing-small;
-    border-radius: $border-radius;
-    transition: background-color $transition-speed ease,
-      color $transition-speed ease;
+    font-size: $font-size-normal;
+    transition: color $transition-speed ease;
 
-    &:hover {
-      background-color: $wolf-color;
-      color: $moon-color;
-    }
-
+    &:hover,
     &.router-link-active {
-      background-color: $primary-color;
-      color: $moon-color;
+      color: $accent-color;
     }
   }
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  color: $moon-color;
+  font-size: $font-size-large;
+  cursor: pointer;
+  margin-right: $spacing-small;
+  transition: color $transition-speed ease;
+
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.language-select {
+  background-color: $wolf-color;
+  color: $moon-color;
+  border: none;
+  padding: $spacing-xs $spacing-small;
+  border-radius: $border-radius;
+  font-size: $font-size-small;
+  cursor: pointer;
 }
 
 .app-main {
   flex-grow: 1;
   padding: $spacing-large;
-  background-image: url("@/assets/images/werewolf-background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  max-width: $max-width;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .app-footer {
   background-color: $night-color;
-  color: $text-color;
+  color: $moon-color;
   text-align: center;
   padding: $spacing-medium;
   margin-top: auto;
 }
 
 // Dark mode styles
-:global(.dark-mode) {
-  .app-layout {
-    background-color: darken($background-color, 10%);
-  }
+.dark-mode {
+  background-color: darken($background-color, 5%);
 
-  .app-header {
-    background-color: darken($night-color, 5%);
-  }
-
-  .nav-list {
-    a {
-      &:hover {
-        background-color: lighten($wolf-color, 10%);
-      }
-
-      &.router-link-active {
-        background-color: lighten($primary-color, 10%);
-      }
-    }
-  }
-
+  .app-header,
   .app-footer {
     background-color: darken($night-color, 5%);
   }
 }
 
 // Responsive styles
-@media (min-width: $breakpoint-tablet) {
-  .app-title {
-    font-size: 2.5rem;
+@media (max-width: $breakpoint-tablet) {
+  .menu-toggle {
+    display: block;
   }
 
   .nav-list {
-    li {
-      margin: 0 $spacing-medium;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: $night-color;
+    flex-direction: column;
+    padding: $spacing-medium;
+
+    &.nav-open {
+      display: flex;
     }
 
-    a {
-      padding: $spacing-small $spacing-medium;
+    li {
+      margin: $spacing-small 0;
     }
   }
+}
+
+// Transition styles
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $transition-speed ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
