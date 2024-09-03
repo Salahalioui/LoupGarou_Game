@@ -10,8 +10,10 @@
               class="role-image"
             />
           </div>
-          <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
-          <div class="role-type">{{ $t(`roles.${role.id}.type`) }}</div>
+          <div class="role-info">
+            <h3 class="role-name">{{ $t(`roles.${role.id}.name`) }}</h3>
+            <div class="role-type">{{ $t(`roles.${role.id}.type`) }}</div>
+          </div>
         </div>
         <button class="flip-button" @click="showBack = true">
           <i class="fas fa-redo"></i>
@@ -57,7 +59,6 @@ export default {
   computed: {
     roleAbilities() {
       const abilities = this.getAbilitiesFromLocale(this.role.id);
-      console.log("Computed abilities:", abilities);
       return abilities;
     },
   },
@@ -71,11 +72,6 @@ export default {
       const currentLocale = this.$i18n.locale;
       return locales[currentLocale]?.roles[roleId]?.abilities || [];
     },
-  },
-  mounted() {
-    console.log("Role:", this.role);
-    console.log("Raw abilities:", this.getAbilitiesFromLocale(this.role.id));
-    console.log("Computed abilities:", this.roleAbilities);
   },
   data() {
     return {
@@ -127,6 +123,49 @@ export default {
   &.flip {
     transform: rotateY(180deg);
   }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-frame {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-small;
+  }
+
+  .role-image {
+    width: 95%;
+    height: 95%;
+    object-fit: cover;
+    border-radius: $border-radius;
+  }
+
+  .role-info {
+    padding: $spacing-small;
+    background: rgba($night-color, 0.7);
+  }
+
+  .role-name {
+    font-family: $font-family-heading;
+    font-size: $font-size-large;
+    color: $moon-color;
+    text-align: center;
+    margin-bottom: $spacing-small;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .role-type {
+    font-size: $font-size-small;
+    color: $accent-color;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
 }
 
 .card-back {
@@ -136,76 +175,54 @@ export default {
   &.flip {
     transform: rotateY(0deg);
   }
-}
 
-.card-content {
-  padding: $spacing-medium;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.card-frame {
-  border: 4px solid $accent-color;
-  border-radius: $border-radius;
-  padding: $spacing-small;
-  margin-bottom: $spacing-medium;
-}
-
-.role-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: $border-radius;
-}
-
-.role-name {
-  font-family: $font-family-heading;
-  font-size: $font-size-xlarge;
-  color: $moon-color;
-  text-align: center;
-  margin-bottom: $spacing-small;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.role-type {
-  font-size: $font-size-small;
-  color: $accent-color;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.role-description {
-  font-size: $font-size-normal;
-  color: $text-color;
-  margin-bottom: $spacing-medium;
-  line-height: 1.4;
-}
-
-.role-abilities {
-  h4 {
-    font-family: $font-family-heading;
-    font-size: $font-size-large;
-    color: $accent-color;
-    margin-bottom: $spacing-small;
+  .card-content {
+    padding: $spacing-medium;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  ul {
-    list-style-type: none;
-    padding-left: $spacing-medium;
+  .role-name {
+    font-family: $font-family-heading;
+    font-size: $font-size-xlarge;
+    color: $moon-color;
+    text-align: center;
+    margin-bottom: $spacing-small;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
 
-    li {
-      color: $text-color;
+  .role-description {
+    font-size: $font-size-normal;
+    color: $text-color;
+    margin-bottom: $spacing-medium;
+    line-height: 1.4;
+  }
+
+  .role-abilities {
+    h4 {
+      font-family: $font-family-heading;
+      font-size: $font-size-large;
+      color: $accent-color;
       margin-bottom: $spacing-small;
-      position: relative;
+    }
 
-      &::before {
-        content: "•";
-        color: $accent-color;
-        position: absolute;
-        left: -$spacing-medium;
+    ul {
+      list-style-type: none;
+      padding-left: $spacing-medium;
+
+      li {
+        color: $text-color;
+        margin-bottom: $spacing-small;
+        position: relative;
+
+        &::before {
+          content: "•";
+          color: $accent-color;
+          position: absolute;
+          left: -$spacing-medium;
+        }
       }
     }
   }
