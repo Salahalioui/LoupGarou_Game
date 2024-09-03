@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import IndexedDBService from "@/services/IndexedDBService";
+import game from "./modules/game";
 
 const dbService = new IndexedDBService();
 
@@ -132,5 +133,7 @@ export default createStore({
       }
     },
   },
-  modules: {},
+  modules: {
+    game,
+  },
 });

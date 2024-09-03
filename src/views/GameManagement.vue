@@ -5,6 +5,9 @@
         v-if="gameState === 'setup'"
         @game-start="startGame"
       />
+      <button @click="openSettings" class="settings-btn">
+        {{ $t("settings.title") }}
+      </button>
       <PlayerRoleRevealComponent
         ref="playerRoleRevealComponent"
         v-if="gameState === 'reveal'"
@@ -16,6 +19,10 @@
         :gameSetup="gameSetup"
         @game-end="endGame"
       />
+      <SettingsComponent
+        v-if="gameState === 'settings'"
+        @settings-saved="closeSettings"
+      />
     </div>
   </div>
 </template>
@@ -24,6 +31,7 @@
 import GameSetupComponent from "@/components/GameSetupComponent.vue";
 import PlayerRoleRevealComponent from "@/components/PlayerRoleRevealComponent.vue";
 import GameFlowComponent from "@/components/GameFlowComponent.vue";
+import SettingsComponent from "@/components/SettingsComponent.vue";
 
 export default {
   name: "GameManagement",
@@ -31,10 +39,11 @@ export default {
     GameSetupComponent,
     PlayerRoleRevealComponent,
     GameFlowComponent,
+    SettingsComponent,
   },
   data() {
     return {
-      gameState: "setup", // 'setup', 'reveal', 'inProgress'
+      gameState: "setup", // 'setup', 'reveal', 'inProgress', 'settings'
       gameSetup: null,
     };
   },
@@ -55,6 +64,12 @@ export default {
       console.log("Ending game");
       this.gameState = "setup";
       this.gameSetup = null;
+    },
+    openSettings() {
+      this.gameState = "settings";
+    },
+    closeSettings() {
+      this.gameState = "setup";
     },
   },
 };
@@ -78,6 +93,22 @@ export default {
   display: flex;
   flex-direction: column;
   gap: $spacing-medium;
+}
+
+.settings-btn {
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-normal;
+  background-color: $secondary-color;
+  color: $text-color;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: $spacing-medium;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
 }
 
 @media (min-width: $breakpoint-tablet) {

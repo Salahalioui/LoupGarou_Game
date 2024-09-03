@@ -302,5 +302,12 @@
       "submit": "Submit",
       "thankYou": "Thank you for your feedback!"
     }
+  },
+  "settings": {
+    "title": "Game Settings",
+    "seconds": "seconds",
+    "save": "Save Settings",
+    "resetDefaults": "Reset Defaults"
   }
 }
+

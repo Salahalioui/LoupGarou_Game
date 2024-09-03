@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       currentPhase: "Night",
-      timeRemaining: 120,
+      timeRemaining: 0,
       players: [],
       timer: null,
       phases: ["Night", "Day Discussion", "Day Voting", "Execution"],
@@ -112,7 +112,8 @@ export default {
       clearInterval(this.timer);
       const currentIndex = this.phases.indexOf(this.currentPhase);
       this.currentPhase = this.phases[(currentIndex + 1) % this.phases.length];
-      this.timeRemaining = this.currentPhase === "Night" ? 120 : 180;
+      this.timeRemaining =
+        this.$store.state.game.phaseDurations[this.currentPhase];
 
       if (this.currentPhase === "Night") {
         this.playNightSound();
