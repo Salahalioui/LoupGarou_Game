@@ -136,18 +136,23 @@ export default {
     align-items: center;
     justify-content: center;
     padding: $spacing-small;
+    height: 80%; // Add this line
   }
 
   .role-image {
-    width: 95%;
-    height: 95%;
-    object-fit: cover;
+    width: 100%; // Change from 95% to 100%
+    height: 100%; // Change from 95% to 100%
+    object-fit: contain; // Change from cover to contain
     border-radius: $border-radius;
   }
 
   .role-info {
     padding: $spacing-small;
     background: rgba($night-color, 0.7);
+    height: 20%; // Add this line
+    display: flex; // Add this line
+    flex-direction: column; // Add this line
+    justify-content: center; // Add this line
   }
 
   .role-name {
