@@ -38,6 +38,12 @@ export const getPredefinedRoles = () => [
     image: require("@/assets/images/roles/Witch.jpeg"),
   },
   {
+    id: "The Doctor",
+    name: i18n.global.t("roles.Doctor.name"),
+    description: i18n.global.t("roles.Doctor.description"),
+    image: require("@/assets/images/roles/Doctor.jpeg"),
+  },
+  {
     id: "priest",
     name: i18n.global.t("roles.priest.name"),
     description: i18n.global.t("roles.priest.description"),

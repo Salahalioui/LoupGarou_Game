@@ -120,6 +120,14 @@
         "Use a poison to eliminate a player (defined by the moderator)"
       ]
     },
+    "The Doctor": {
+      "name": "Doctor",
+      "description": "can Heal a player whom attaked by the wolves , but in the day that Player will remain silent ",
+      "type": "Villagers",
+      "abilities": [
+        "can Heal a player whom attaked by wolves (defined by the moderator)"
+      ]
+    },
     "priest": {
       "name": "The Priest",
       "description": "He can spray a player with holy water. If that player is a werewolf, he will be eliminated ",
